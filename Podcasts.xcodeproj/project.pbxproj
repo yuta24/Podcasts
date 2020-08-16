@@ -3,16 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2B05893424E96A0100D42170 /* PodcastsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05893324E96A0100D42170 /* PodcastsApp.swift */; };
-		2B05893624E96A0100D42170 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05893524E96A0100D42170 /* ContentView.swift */; };
 		2B05893824E96A0300D42170 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B05893724E96A0300D42170 /* Assets.xcassets */; };
 		2B05893B24E96A0300D42170 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B05893A24E96A0300D42170 /* Preview Assets.xcassets */; };
 		2B05894624E96A0400D42170 /* PodcastsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05894524E96A0400D42170 /* PodcastsTests.swift */; };
 		2B05895124E96A0400D42170 /* PodcastsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05895024E96A0400D42170 /* PodcastsUITests.swift */; };
+		2B05896024E96A9F00D42170 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2B05895F24E96A9F00D42170 /* ComposableArchitecture */; };
+		2B05896224E9748500D42170 /* SearchPodcastsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05896124E9748500D42170 /* SearchPodcastsView.swift */; };
+		2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05896524E974B800D42170 /* FavoritePodcastsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +37,6 @@
 /* Begin PBXFileReference section */
 		2B05893024E96A0100D42170 /* Podcasts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcasts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B05893324E96A0100D42170 /* PodcastsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastsApp.swift; sourceTree = "<group>"; };
-		2B05893524E96A0100D42170 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B05893724E96A0300D42170 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B05893A24E96A0300D42170 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2B05893C24E96A0300D42170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,6 +46,8 @@
 		2B05894C24E96A0400D42170 /* PodcastsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodcastsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B05895024E96A0400D42170 /* PodcastsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastsUITests.swift; sourceTree = "<group>"; };
 		2B05895224E96A0400D42170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B05896124E9748500D42170 /* SearchPodcastsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastsView.swift; sourceTree = "<group>"; };
+		2B05896524E974B800D42170 /* FavoritePodcastsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B05896024E96A9F00D42170 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,8 +99,7 @@
 		2B05893224E96A0100D42170 /* Podcasts */ = {
 			isa = PBXGroup;
 			children = (
-				2B05893324E96A0100D42170 /* PodcastsApp.swift */,
-				2B05893524E96A0100D42170 /* ContentView.swift */,
+				2B05896324E9748F00D42170 /* Sources */,
 				2B05893724E96A0300D42170 /* Assets.xcassets */,
 				2B05893C24E96A0300D42170 /* Info.plist */,
 				2B05893924E96A0300D42170 /* Preview Content */,
@@ -130,6 +133,24 @@
 			path = PodcastsUITests;
 			sourceTree = "<group>";
 		};
+		2B05896324E9748F00D42170 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2B05896424E974A500D42170 /* Features */,
+				2B05893324E96A0100D42170 /* PodcastsApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		2B05896424E974A500D42170 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2B05896524E974B800D42170 /* FavoritePodcastsView.swift */,
+				2B05896124E9748500D42170 /* SearchPodcastsView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +167,9 @@
 			dependencies = (
 			);
 			name = Podcasts;
+			packageProductDependencies = (
+				2B05895F24E96A9F00D42170 /* ComposableArchitecture */,
+			);
 			productName = Podcasts;
 			productReference = 2B05893024E96A0100D42170 /* Podcasts.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +241,9 @@
 				Base,
 			);
 			mainGroup = 2B05892724E96A0100D42170;
+			packageReferences = (
+				2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 2B05893124E96A0100D42170 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,8 +286,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B05893624E96A0100D42170 /* ContentView.swift in Sources */,
+				2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */,
 				2B05893424E96A0100D42170 /* PodcastsApp.swift in Sources */,
+				2B05896224E9748500D42170 /* SearchPodcastsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +608,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2B05895F24E96A9F00D42170 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2B05892824E96A0100D42170 /* Project object */;
 }
