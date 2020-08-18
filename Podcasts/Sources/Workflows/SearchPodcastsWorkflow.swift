@@ -15,7 +15,7 @@ class SearchPodcastsWorkflow {
         self.networkingClosure = networkingClosure
     }
 
-    func execute(_ searchText: String) -> AnyPublisher<SearchPodcastResult, Error> {
+    func execute(_ searchText: String) -> AnyPublisher<SearchPodcastResult, Networking.Failure> {
         networkingClosure().search(searchText)
     }
 }

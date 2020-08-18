@@ -20,6 +20,10 @@
 		2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */; };
 		2B7BB6BA24EA13F000D48B20 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B924EA13F000D48B20 /* Networking.swift */; };
 		2B7BB6BE24EA27B300D48B20 /* SearchPodcastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */; };
+		2B7BB6C724EAC95000D48B20 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7BB6C624EAC95000D48B20 /* Nuke */; };
+		2B7BB6CD24EACCEA00D48B20 /* FetchImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7BB6CC24EACCEA00D48B20 /* FetchImage */; };
+		2B7BB6CF24EACD1300D48B20 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6CE24EACD1300D48B20 /* ImageView.swift */; };
+		2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6D624EC0A3500D48B20 /* SearchNavigation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +62,8 @@
 		2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastsWorkflow.swift; sourceTree = "<group>"; };
 		2B7BB6B924EA13F000D48B20 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastResult.swift; sourceTree = "<group>"; };
+		2B7BB6CE24EACD1300D48B20 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		2B7BB6D624EC0A3500D48B20 /* SearchNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7BB6CD24EACCEA00D48B20 /* FetchImage in Frameworks */,
 				2B05896024E96A9F00D42170 /* ComposableArchitecture in Frameworks */,
+				2B7BB6C724EAC95000D48B20 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,9 +154,10 @@
 		2B05896324E9748F00D42170 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2B7BB6B624EA107000D48B20 /* Workflows */,
 				2B05896424E974A500D42170 /* Features */,
 				2B05896724E975CA00D42170 /* Models */,
+				2B7BB6C824EACA1B00D48B20 /* Views */,
+				2B7BB6B624EA107000D48B20 /* Workflows */,
 				2B05893324E96A0100D42170 /* PodcastsApp.swift */,
 				2B7BB6B924EA13F000D48B20 /* Networking.swift */,
 			);
@@ -190,6 +199,15 @@
 			path = Workflows;
 			sourceTree = "<group>";
 		};
+		2B7BB6C824EACA1B00D48B20 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B7BB6CE24EACD1300D48B20 /* ImageView.swift */,
+				2B7BB6D624EC0A3500D48B20 /* SearchNavigation.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -208,6 +226,8 @@
 			name = Podcasts;
 			packageProductDependencies = (
 				2B05895F24E96A9F00D42170 /* ComposableArchitecture */,
+				2B7BB6C624EAC95000D48B20 /* Nuke */,
+				2B7BB6CC24EACCEA00D48B20 /* FetchImage */,
 			);
 			productName = Podcasts;
 			productReference = 2B05893024E96A0100D42170 /* Podcasts.app */;
@@ -282,6 +302,8 @@
 			mainGroup = 2B05892724E96A0100D42170;
 			packageReferences = (
 				2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */,
+				2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */,
 			);
 			productRefGroup = 2B05893124E96A0100D42170 /* Products */;
 			projectDirPath = "";
@@ -330,6 +352,8 @@
 				2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */,
 				2B05893424E96A0100D42170 /* PodcastsApp.swift in Sources */,
 				2B7BB6BA24EA13F000D48B20 /* Networking.swift in Sources */,
+				2B7BB6CF24EACD1300D48B20 /* ImageView.swift in Sources */,
+				2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */,
 				2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */,
 				2B05896224E9748500D42170 /* SearchPodcastsView.swift in Sources */,
 			);
@@ -662,6 +686,22 @@
 				minimumVersion = 0.7.0;
 			};
 		};
+		2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.1;
+			};
+		};
+		2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/FetchImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -669,6 +709,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		2B7BB6C624EAC95000D48B20 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		2B7BB6CC24EACCEA00D48B20 /* FetchImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */;
+			productName = FetchImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

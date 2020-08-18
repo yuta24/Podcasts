@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchPodcastResult: Decodable {
+struct SearchPodcastResult: Equatable, Decodable {
     var resultCount: Int
     var results: [Podcast]
 }

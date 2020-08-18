@@ -27,14 +27,14 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         workflow = SearchPodcastsWorkflow(
             networkingClosure: {
                 Networking(search: { _ in
-                    Just([])
-                        .setFailureType(to: Error.self)
+                    Just(SearchPodcastResult(resultCount: 0, results: []))
+                        .setFailureType(to: Networking.Failure.self)
                         .eraseToAnyPublisher()
                 })
             }
         )
 
-        let expects: [Podcast] = []
+        let expects: SearchPodcastResult = .init(resultCount: 0, results: [])
 
         let exp = expectation(description: "\(#function):\(#line)")
 
@@ -59,30 +59,38 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         workflow = SearchPodcastsWorkflow(
             networkingClosure: {
                 Networking(search: { _ in
-                    Just<[Podcast]>([
-                        Podcast(
-                            trackName: "Track01",
-                            artistName: "Swift0",
-                            artworkUrl600: .none,
-                            trackCount: 123,
-                            feedUrlSting: .none
+                    Just(
+                        SearchPodcastResult(
+                            resultCount: 1,
+                            results: [
+                                Podcast(
+                                    trackName: "Track01",
+                                    artistName: "Swift0",
+                                    artworkUrl600: .none,
+                                    trackCount: 123,
+                                    feedUrl: .none
+                                    )
+                            ]
                         )
-                    ])
-                    .setFailureType(to: Error.self)
+                    )
+                    .setFailureType(to: Networking.Failure.self)
                     .eraseToAnyPublisher()
                 })
             }
         )
 
-        let expects: [Podcast] = [
-            Podcast(
-                trackName: "Track01",
-                artistName: "Swift0",
-                artworkUrl600: .none,
-                trackCount: 123,
-                feedUrlSting: .none
-            )
-        ]
+        let expects: SearchPodcastResult = .init(
+            resultCount: 1,
+            results: [
+                Podcast(
+                    trackName: "Track01",
+                    artistName: "Swift0",
+                    artworkUrl600: .none,
+                    trackCount: 123,
+                    feedUrl: .none
+                )
+            ]
+        )
 
         let exp = expectation(description: "\(#function):\(#line)")
 

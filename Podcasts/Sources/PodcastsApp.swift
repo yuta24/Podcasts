@@ -10,52 +10,70 @@ import ComposableArchitecture
 
 struct AppState: Equatable {
     var selected: Int
+
+    var searchPodcastsState: SearchPodcastsState
 }
 
 enum AppAction: Equatable {
     case tabSelected(Int)
+
+    case searchPodcasts(SearchPodcastsAction)
 }
 
-class AppEnvironment {
+struct AppEnvironment {
+    var networking: Networking
+    var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
+let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+    searchPodcastsReducer.pullback(
+        state: \.searchPodcastsState,
+        action: /AppAction.searchPodcasts,
+        environment: { SearchPodcastsEnvironment(networking: $0.networking, mainQueue: $0.mainQueue) }
+    ),
+    .init { state, action, environment in
 
-    switch action {
+        switch action {
 
-    case .tabSelected(let index):
-        state.selected = index
+        case .tabSelected(let index):
+            state.selected = index
 
-        return .none
+            return .none
+
+        case .searchPodcasts:
+
+            return .none
+
+        }
 
     }
-
-}
+)
 
 @main
 struct PodcastsApp: App {
     let store = Store<AppState, AppAction>(
-        initialState: .init(selected: 0),
+        initialState: .init(selected: 0, searchPodcastsState: .init(searchText: "", podcasts: [])),
         reducer: appReducer.debug(),
-        environment: AppEnvironment())
+        environment: .init(networking: .live, mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 
     var body: some Scene {
         WindowGroup {
             WithViewStore(store) { viewStore in
                 TabView(selection: viewStore.binding(get: { $0.selected }, send: AppAction.tabSelected) ) {
-                        SearchPodcastsView()
-                            .tabItem {
-                                Image(systemName: "magnifyingglass")
-                                Text("Search")
-                            }
-                            .tag(0)
-                        FavoritePodcastsView()
-                            .tabItem {
-                                Image(systemName: "star.fill")
-                                Text("Favorite")
-                            }
-                            .tag(1)
-                    }
+                    SearchPodcastsView(store: store.scope(state: \.searchPodcastsState, action: AppAction.searchPodcasts))
+                        .edgesIgnoringSafeArea(.vertical)
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                        .tag(0)
+                    FavoritePodcastsView()
+                        .tabItem {
+                            Image(systemName: "star.fill")
+                            Text("Favorite")
+                        }
+                        .tag(1)
+                }
             }
         }
     }
