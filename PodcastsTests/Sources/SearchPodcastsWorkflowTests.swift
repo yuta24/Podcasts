@@ -26,15 +26,24 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         // Given
         workflow = SearchPodcastsWorkflow(
             networkingClosure: {
-                Networking(search: { _ in
-                    Just(SearchPodcastResult(resultCount: 0, results: []))
-                        .setFailureType(to: Networking.Failure.self)
-                        .eraseToAnyPublisher()
-                })
+                Networking(
+                    search: { _ in
+                        Just(SearchPodcastResult(resultCount: 0, results: []))
+                            .setFailureType(to: Networking.Failure.self)
+                            .eraseToAnyPublisher()
+                    },
+                    fetchPodcast: { _ in
+                        Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                            .eraseToAnyPublisher()
+                    }
+                )
             }
         )
 
-        let expects: SearchPodcastResult = .init(resultCount: 0, results: [])
+        let expects: SearchPodcastResult = .init(
+            resultCount: 0,
+            results: []
+        )
 
         let exp = expectation(description: "\(#function):\(#line)")
 
@@ -58,24 +67,30 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         // Given
         workflow = SearchPodcastsWorkflow(
             networkingClosure: {
-                Networking(search: { _ in
-                    Just(
-                        SearchPodcastResult(
-                            resultCount: 1,
-                            results: [
-                                Podcast(
-                                    trackName: "Track01",
-                                    artistName: "Swift0",
-                                    artworkUrl600: .none,
-                                    trackCount: 123,
-                                    feedUrl: .none
-                                    )
-                            ]
+                Networking(
+                    search: { _ in
+                        Just(
+                            SearchPodcastResult(
+                                resultCount: 1,
+                                results: [
+                                    Podcast(
+                                        trackName: "Track01",
+                                        artistName: "Swift0",
+                                        artworkUrl600: .none,
+                                        trackCount: 123,
+                                        feedUrl: .none
+                                        )
+                                ]
+                            )
                         )
-                    )
-                    .setFailureType(to: Networking.Failure.self)
-                    .eraseToAnyPublisher()
-                })
+                        .setFailureType(to: Networking.Failure.self)
+                        .eraseToAnyPublisher()
+                    },
+                    fetchPodcast: { _ in
+                        Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                            .eraseToAnyPublisher()
+                    }
+                )
             }
         )
 

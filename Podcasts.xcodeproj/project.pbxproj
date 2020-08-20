@@ -24,6 +24,11 @@
 		2B7BB6CD24EACCEA00D48B20 /* FetchImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7BB6CC24EACCEA00D48B20 /* FetchImage */; };
 		2B7BB6CF24EACD1300D48B20 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6CE24EACD1300D48B20 /* ImageView.swift */; };
 		2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6D624EC0A3500D48B20 /* SearchNavigation.swift */; };
+		2B7BB6DA24EC143E00D48B20 /* FeedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7BB6D924EC143E00D48B20 /* FeedKit */; };
+		2B7BB6DC24EC16AA00D48B20 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6DB24EC16AA00D48B20 /* Episode.swift */; };
+		2B7BB6DE24EC176300D48B20 /* FetchPodcastWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */; };
+		2B7BB6E024EC189300D48B20 /* FetchPodcastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */; };
+		2B7BB6E224EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +69,10 @@
 		2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastResult.swift; sourceTree = "<group>"; };
 		2B7BB6CE24EACD1300D48B20 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		2B7BB6D624EC0A3500D48B20 /* SearchNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigation.swift; sourceTree = "<group>"; };
+		2B7BB6DB24EC16AA00D48B20 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastWorkflow.swift; sourceTree = "<group>"; };
+		2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastResult.swift; sourceTree = "<group>"; };
+		2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastWorkflowTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +83,7 @@
 				2B7BB6CD24EACCEA00D48B20 /* FetchImage in Frameworks */,
 				2B05896024E96A9F00D42170 /* ComposableArchitecture in Frameworks */,
 				2B7BB6C724EAC95000D48B20 /* Nuke in Frameworks */,
+				2B7BB6DA24EC143E00D48B20 /* FeedKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +188,8 @@
 			children = (
 				2B7BB6B424EA0F6400D48B20 /* Podcast.swift */,
 				2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */,
+				2B7BB6DB24EC16AA00D48B20 /* Episode.swift */,
+				2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,6 +197,7 @@
 		2B7BB6B124EA0D6800D48B20 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */,
 				2B05894524E96A0400D42170 /* PodcastsTests.swift */,
 				2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */,
 			);
@@ -195,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */,
+				2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -228,6 +242,7 @@
 				2B05895F24E96A9F00D42170 /* ComposableArchitecture */,
 				2B7BB6C624EAC95000D48B20 /* Nuke */,
 				2B7BB6CC24EACCEA00D48B20 /* FetchImage */,
+				2B7BB6D924EC143E00D48B20 /* FeedKit */,
 			);
 			productName = Podcasts;
 			productReference = 2B05893024E96A0100D42170 /* Podcasts.app */;
@@ -304,6 +319,7 @@
 				2B05895E24E96A9F00D42170 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */,
 				2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */,
+				2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */,
 			);
 			productRefGroup = 2B05893124E96A0100D42170 /* Products */;
 			projectDirPath = "";
@@ -350,8 +366,11 @@
 				2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */,
 				2B7BB6BE24EA27B300D48B20 /* SearchPodcastResult.swift in Sources */,
 				2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */,
+				2B7BB6DC24EC16AA00D48B20 /* Episode.swift in Sources */,
 				2B05893424E96A0100D42170 /* PodcastsApp.swift in Sources */,
 				2B7BB6BA24EA13F000D48B20 /* Networking.swift in Sources */,
+				2B7BB6E024EC189300D48B20 /* FetchPodcastResult.swift in Sources */,
+				2B7BB6DE24EC176300D48B20 /* FetchPodcastWorkflow.swift in Sources */,
 				2B7BB6CF24EACD1300D48B20 /* ImageView.swift in Sources */,
 				2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */,
 				2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */,
@@ -365,6 +384,7 @@
 			files = (
 				2B7BB6B324EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift in Sources */,
 				2B05894624E96A0400D42170 /* PodcastsTests.swift in Sources */,
+				2B7BB6E224EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +722,14 @@
 				minimumVersion = 0.2.1;
 			};
 		};
+		2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nmdias/FeedKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -719,6 +747,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */;
 			productName = FetchImage;
+		};
+		2B7BB6D924EC143E00D48B20 /* FeedKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */;
+			productName = FeedKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
