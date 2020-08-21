@@ -97,4 +97,14 @@ extension Networking {
             .eraseToAnyPublisher()
         }
     )
+    static let mock = Networking(
+        search: { _ in
+            Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                .eraseToAnyPublisher()
+        },
+        fetchPodcast: { _ in
+            Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                .eraseToAnyPublisher()
+        }
+    )
 }

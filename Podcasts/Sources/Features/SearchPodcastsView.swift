@@ -13,15 +13,21 @@ import FetchImage
 struct SearchPodcastsState: Equatable {
     var searchText: String
     var podcasts: [Podcast]
+
+    var selection: Identified<Int, DisplayPodcastState?>?
     var alertState: AlertState<SearchPodcastsAction>?
 }
 
 enum SearchPodcastsAction: Equatable {
+    case displayPodcast(DisplayPodcastAction)
+
     case search
     case searchTextChanged(String)
-    case alertDismissed
-
     case podcastsResponse(Result<[Podcast], Networking.Failure>)
+
+    case alertDismissed
+    case setNavigation(selection: Int?)
+    case setNavigationSelectionDelayCompleted
 }
 
 struct SearchPodcastsEnvironment {
@@ -29,49 +35,90 @@ struct SearchPodcastsEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
-let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, SearchPodcastsEnvironment> { state, action, environment in
-
-    switch action {
-
-    case .search:
-        struct SearchId: Hashable {}
-
-        guard !state.searchText.isEmpty else {
-            state.podcasts = []
-          return .cancel(id: SearchId())
+let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, SearchPodcastsEnvironment>.combine(
+    displayPodcastReducer.optional()
+        .pullback(state: \Identified.value, action: .self, environment: { $0 })
+        .optional()
+        .pullback(
+        state: \.selection,
+        action: /SearchPodcastsAction.displayPodcast,
+        environment: {
+            DisplayPodcastEnvironment(networking: $0.networking, mainQueue: $0.mainQueue)
         }
+    ),
+    .init { state, action, environment in
 
-        return environment.networking.search(state.searchText)
-            .eraseToEffect()
-            .receive(on: environment.mainQueue)
-            .catchToEffect()
-            .debounce(id: SearchId(), for: 0.3, scheduler: environment.mainQueue)
-            .map { SearchPodcastsAction.podcastsResponse($0.map(\.results)) }
+        struct CancelId: Hashable {}
 
-    case .searchTextChanged(let searchText):
+        switch action {
 
-        state.searchText = searchText
+        case .displayPodcast:
 
-        return .init(value: .search)
+            return .none
 
-    case .alertDismissed:
-        state.alertState = .none
+        case .search:
+            struct SearchId: Hashable {}
 
-        return .none
+            guard !state.searchText.isEmpty else {
+                state.podcasts = []
+              return .cancel(id: SearchId())
+            }
 
-    case .podcastsResponse(.success(let podcasts)):
-        state.podcasts = podcasts
+            return environment.networking.search(state.searchText)
+                .eraseToEffect()
+                .receive(on: environment.mainQueue)
+                .catchToEffect()
+                .debounce(id: SearchId(), for: 0.3, scheduler: environment.mainQueue)
+                .map { SearchPodcastsAction.podcastsResponse($0.map(\.results)) }
 
-        return .none
+        case .searchTextChanged(let searchText):
 
-    case .podcastsResponse(.failure(let error)):
-        state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+            state.searchText = searchText
 
-        return .none
+            return .init(value: .search)
+
+        case .podcastsResponse(.success(let podcasts)):
+            state.podcasts = podcasts
+
+            return .none
+
+        case .podcastsResponse(.failure(let error)):
+            state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+
+            return .none
+
+        case .alertDismissed:
+            state.alertState = .none
+
+            return .none
+
+        case .setNavigation(.some(let index)):
+            state.selection = Identified(nil, id: index)
+
+            return Effect(value: .setNavigationSelectionDelayCompleted)
+                .delay(for: 1, scheduler: DispatchQueue.main)
+                .eraseToEffect()
+                .cancellable(id: CancelId())
+
+        case .setNavigation(.none):
+            state.selection = nil
+
+            return .cancel(id: CancelId())
+
+        case .setNavigationSelectionDelayCompleted:
+            guard let index = state.selection?.id else {
+                return .none
+            }
+
+            state.selection?.value = .init(podcast: state.podcasts[index])
+
+            return .none
+
+        }
 
     }
 
-}
+)
 
 struct SearchPodcastsResultView: View {
     let podcast: Podcast
@@ -113,13 +160,27 @@ struct SearchPodcastsView: View {
 
             } content: { () in
                 ScrollView {
-                    ForEach(Array(viewStore.podcasts.enumerated()), id: \.offset) { _, podcast in
-                        SearchPodcastsResultView(podcast: podcast)
-                            .padding()
+                    ForEach(Array(viewStore.podcasts.enumerated()), id: \.offset) { offset, podcast in
+                        NavigationLink(
+                            destination: IfLetStore(
+                                store.scope(state: { $0.selection?.value }, action: SearchPodcastsAction.displayPodcast),
+                                then: DisplayPodcastView.init(store:)
+                            ),
+                            tag: offset,
+                            selection: viewStore.binding(
+                                get: { $0.selection?.id },
+                                send: SearchPodcastsAction.setNavigation(selection:)
+                            ),
+                            label: {
+                                SearchPodcastsResultView(podcast: podcast)
+                                    .padding()
+                            }
+                        )
                     }
                 }
                 .navigationTitle("Search")
             }
         }
+        .alert(store.scope(state: \.alertState), dismiss: .alertDismissed)
     }
 }
