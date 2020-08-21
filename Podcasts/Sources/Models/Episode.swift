@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Episode: Equatable {
+struct Episode: Equatable, Codable {
     var title: String?
     var desc: String?
     var pubDate: Date?
