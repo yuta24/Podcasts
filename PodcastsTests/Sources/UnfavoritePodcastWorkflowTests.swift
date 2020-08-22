@@ -25,10 +25,13 @@ class UnfavoritePodcastWorkflowTests: XCTestCase {
     }
 
     func test_Unfavoriting() throws {
-        // Given
-        workflow = UnfavoritePodcastWorkflow(userDefaults: userDefaults)
+        let spy = FavoritedPodcastDataStoreSpy(
+            fetchs: { Just([]).eraseToAnyPublisher() },
+            fetch: { Just(.none).eraseToAnyPublisher() },
+            changed: { Just([]).eraseToAnyPublisher() })
 
-        let expects: [PodcastExt] = []
+        // Given
+        workflow = UnfavoritePodcastWorkflow(dataStore: spy.dataStore)
 
         let exp = expectation(description: "\(#function):\(#line)")
 
@@ -51,10 +54,11 @@ class UnfavoritePodcastWorkflowTests: XCTestCase {
                 },
                 receiveValue: { _ in
                     // Then
-                    let array = self.userDefaults.data(forKey: "favorites").flatMap {
-                        try? JSONDecoder().decode([PodcastExt].self, from: $0)
-                    } ?? []
-                    XCTAssertEqual(expects, array)
+                    XCTAssertEqual(spy.fetchsCallCount, 0)
+                    XCTAssertEqual(spy.fetchCallCount, 0)
+                    XCTAssertEqual(spy.appendCallCount, 0)
+                    XCTAssertEqual(spy.removeCallCount, 1)
+                    XCTAssertEqual(spy.changedCallCount, 0)
                 }
             )
             .store(in: &cancellables)

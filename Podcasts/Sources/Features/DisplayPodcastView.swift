@@ -19,6 +19,8 @@ struct DisplayPodcastState: Equatable {
 enum DisplayPodcastAction: Equatable {
     case fetch
     case fetchResponse(Result<FetchPodcastResult, Networking.Failure>)
+    case load(FetchPodcastResult)
+    case loadResult(Result<Tuple2<FetchPodcastResult, PodcastExt?>, Never>)
 
     case favorite
     case favoriteResponse(Result<PodcastExt, Never>)
@@ -29,6 +31,7 @@ enum DisplayPodcastAction: Equatable {
 }
 
 struct DisplayPodcastEnvironment {
+    var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var favoriteWorkflow: FavoritePodcastWorkflow
@@ -40,7 +43,6 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
     switch action {
 
     case .fetch:
-
         return environment.networking.fetchPodcast(URL(string: state.podcast.feedUrl!)!)
             .eraseToEffect()
             .receive(on: environment.mainQueue)
@@ -48,12 +50,24 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
             .map(DisplayPodcastAction.fetchResponse)
 
     case .fetchResponse(.success(let result)):
-        state.ext = .init(result, isFavorited: false)
-
-        return .none
+        return .init(value: .load(result))
 
     case .fetchResponse(.failure(let error)):
         state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+
+        return .none
+
+    case .load(let result):
+
+        return environment.favoritedPodcastDataStore.fetch(result.link!)
+            .map { Tuple2(value0: result, value1: $0) }
+            .eraseToEffect()
+            .receive(on: environment.mainQueue)
+            .catchToEffect()
+            .map(DisplayPodcastAction.loadResult)
+
+    case .loadResult(.success(let tuple)):
+        state.ext = .init(tuple.value0, isFavorited: tuple.value1?.isFavorited ?? false)
 
         return .none
 

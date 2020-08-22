@@ -9,32 +9,21 @@ import Foundation
 import Combine
 
 class FavoritePodcastWorkflow {
-    let userDefaults: UserDefaults
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
+    let dataStore: FavoritedPodcastDataStore
 
-    init(userDefaults: UserDefaults) {
-        self.userDefaults = userDefaults
+    init(dataStore: FavoritedPodcastDataStore) {
+        self.dataStore = dataStore
     }
 
     func execute(_ podcast: PodcastExt) -> AnyPublisher<PodcastExt, Never> {
-        Just(mutate(podcast) {
+        let dataStore = self.dataStore
+
+        return Just(mutate(podcast) {
             $0.isFavorited = true
         })
-        .handleEvents(receiveOutput: { [weak self] value in
-            self?.saveFavoritePodcasts(value)
+        .handleEvents(receiveOutput: { value in
+            dataStore.append(value)
         })
         .eraseToAnyPublisher()
-    }
-
-    private func saveFavoritePodcasts(_ podcast: PodcastExt) {
-        let array = userDefaults.data(forKey: "favorites").flatMap {
-            try? decoder.decode([PodcastExt].self, from: $0)
-        } ?? []
-        let new = mutate(array) {
-            $0.append(podcast)
-        }
-        let data = try! encoder.encode(new)
-        userDefaults.setValue(data, forKey: "favorites")
     }
 }

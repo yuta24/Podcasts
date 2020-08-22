@@ -24,6 +24,8 @@
 		2B79211524F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211424F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift */; };
 		2B79211824F0D19D00043684 /* FavoritedPodcastDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211724F0D19D00043684 /* FavoritedPodcastDataStore.swift */; };
 		2B79211A24F0D1B600043684 /* FavoritedPodcastDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211924F0D1B600043684 /* FavoritedPodcastDataStoreTests.swift */; };
+		2B79211C24F1500500043684 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211B24F1500500043684 /* Utils.swift */; };
+		2B79211E24F15ADD00043684 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211D24F15ADD00043684 /* Tuples.swift */; };
 		2B7BB6B324EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */; };
 		2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B424EA0F6400D48B20 /* Podcast.swift */; };
 		2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */; };
@@ -80,6 +82,8 @@
 		2B79211424F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfavoritePodcastWorkflowTests.swift; sourceTree = "<group>"; };
 		2B79211724F0D19D00043684 /* FavoritedPodcastDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedPodcastDataStore.swift; sourceTree = "<group>"; };
 		2B79211924F0D1B600043684 /* FavoritedPodcastDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedPodcastDataStoreTests.swift; sourceTree = "<group>"; };
+		2B79211B24F1500500043684 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2B79211D24F15ADD00043684 /* Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuples.swift; sourceTree = "<group>"; };
 		2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastsWorkflowTests.swift; sourceTree = "<group>"; };
 		2B7BB6B424EA0F6400D48B20 /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPodcastsWorkflow.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 				2B05893324E96A0100D42170 /* PodcastsApp.swift */,
 				2B7BB6B924EA13F000D48B20 /* Networking.swift */,
 				2B79211024F0017F00043684 /* Mutate.swift */,
+				2B79211D24F15ADD00043684 /* Tuples.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */,
 				2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */,
 				2B79211424F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift */,
+				2B79211B24F1500500043684 /* Utils.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 				2B79210F24EFFFBC00043684 /* PodcastExt.swift in Sources */,
 				2B79210624EEA4AD00043684 /* DisplayPodcastView.swift in Sources */,
 				2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */,
+				2B79211E24F15ADD00043684 /* Tuples.swift in Sources */,
 				2B79210924EEB7D300043684 /* DisplayPodcastResultView.swift in Sources */,
 				2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */,
 				2B05896224E9748500D42170 /* SearchPodcastsView.swift in Sources */,
@@ -429,6 +436,7 @@
 				2B79211A24F0D1B600043684 /* FavoritedPodcastDataStoreTests.swift in Sources */,
 				2B79211524F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift in Sources */,
 				2B7BB6E224EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift in Sources */,
+				2B79211C24F1500500043684 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

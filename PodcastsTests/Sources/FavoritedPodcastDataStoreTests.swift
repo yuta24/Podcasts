@@ -29,6 +29,7 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
         store = FavoritedPodcastDataStore.live
 
         let exp = expectation(description: "\(#function):\(#line)")
+        exp.isInverted = true
 
         let expects1: [PodcastExt] = [
             .init(
@@ -73,13 +74,13 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
             .sink(receiveCompletion: { completion in
                 exp.fulfill()
             }, receiveValue: { value in
-                counter += 1
-
                 if counter == 1 {
                     XCTAssertEqual(expects1, value)
                 } else if counter == 2 {
                     XCTAssertEqual(expects2, value)
                 }
+
+                counter += 1
             })
             .store(in: &cancellables)
 
@@ -106,6 +107,6 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
         ))
 
         // Then
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 0.5)
     }
 }

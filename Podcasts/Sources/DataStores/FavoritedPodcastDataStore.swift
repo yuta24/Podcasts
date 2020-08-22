@@ -10,11 +10,12 @@ import Combine
 import OSLog
 
 struct FavoritedPodcastDataStore {
-    var fetch: () -> AnyPublisher<[PodcastExt], Never>
+    var fetchs: () -> AnyPublisher<[PodcastExt], Never>
+    var fetch: (URL) -> AnyPublisher<PodcastExt?, Never>
     var append: (PodcastExt) -> Void
     var remove: (PodcastExt) -> Void
 
-    var changed: () -> Publishers.Decode<NSObject.KeyValueObservingPublisher<UserDefaults, JSONDecoder.Input>, [PodcastExt], JSONDecoder>
+    var changed: () -> AnyPublisher<[PodcastExt], Never>
 }
 
 private let logger = Logger(subsystem: "com.bivre.podcasts", category: "FavoritedPodcastDataStore")
@@ -29,12 +30,20 @@ private extension UserDefaults {
 
 extension FavoritedPodcastDataStore {
     static let live = FavoritedPodcastDataStore(
-        fetch: {
+        fetchs: {
             Just(UserDefaults.standard.favorites)
                 .map {
                     try? decoder.decode([PodcastExt].self, from: $0)
                 }
                 .map { $0 ?? [] }
+                .eraseToAnyPublisher()
+        },
+        fetch: { link in
+            Just(())
+                .map { _ -> PodcastExt? in
+                    let array = try? decoder.decode([PodcastExt].self, from: UserDefaults.standard.favorites)
+                    return array?.first(where: { $0.link == link })
+                }
                 .eraseToAnyPublisher()
         },
         append: { ext in
@@ -48,14 +57,22 @@ extension FavoritedPodcastDataStore {
         remove: { ext in
             let array = try? decoder.decode([PodcastExt].self, from: UserDefaults.standard.favorites)
             let new = mutate(array ?? []) {
-                $0.removeAll(where: { $0 == ext })
+                $0.removeAll(where: { $0.link == ext.link })
             }
             let data = try! encoder.encode(new)
             UserDefaults.standard.setValue(data, forKey: "favorites")
         },
         changed: {
             UserDefaults.standard.publisher(for: \.favorites)
-                .decode(type: [PodcastExt].self, decoder: decoder)
+                .setFailureType(to: Never.self)
+                .eraseToAnyPublisher()
+                .eraseToAnyPublisher()
+                .map {
+                    try? decoder.decode([PodcastExt].self, from: $0)
+                }
+                .map { $0 ?? [] }
+                .eraseToAnyPublisher()
+                .eraseToAnyPublisher()
         }
     )
 }

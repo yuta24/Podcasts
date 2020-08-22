@@ -21,7 +21,7 @@ enum AppAction: Equatable {
 }
 
 struct AppEnvironment {
-    var userDefaults: UserDefaults
+    var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
@@ -32,7 +32,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         action: /AppAction.searchPodcasts,
         environment: {
             SearchPodcastsEnvironment(
-                userDefault: $0.userDefaults,
+                favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
                 networking: $0.networking,
                 mainQueue: $0.mainQueue
             )
@@ -62,7 +62,7 @@ struct PodcastsApp: App {
         initialState: .init(selected: 0, searchPodcastsState: .init(searchText: "", podcasts: [])),
         reducer: appReducer.debug(),
         environment: .init(
-            userDefaults: .standard,
+            favoritedPodcastDataStore: .live,
             networking: .live,
             mainQueue: DispatchQueue.main.eraseToAnyScheduler()
         )
