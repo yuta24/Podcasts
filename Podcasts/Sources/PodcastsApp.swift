@@ -21,6 +21,7 @@ enum AppAction: Equatable {
 }
 
 struct AppEnvironment {
+    var userDefaults: UserDefaults
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
@@ -29,7 +30,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     searchPodcastsReducer.pullback(
         state: \.searchPodcastsState,
         action: /AppAction.searchPodcasts,
-        environment: { SearchPodcastsEnvironment(networking: $0.networking, mainQueue: $0.mainQueue) }
+        environment: {
+            SearchPodcastsEnvironment(
+                userDefault: $0.userDefaults,
+                networking: $0.networking,
+                mainQueue: $0.mainQueue
+            )
+        }
     ),
     .init { state, action, environment in
 
@@ -54,7 +61,12 @@ struct PodcastsApp: App {
     let store = Store<AppState, AppAction>(
         initialState: .init(selected: 0, searchPodcastsState: .init(searchText: "", podcasts: [])),
         reducer: appReducer.debug(),
-        environment: .init(networking: .live, mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
+        environment: .init(
+            userDefaults: .standard,
+            networking: .live,
+            mainQueue: DispatchQueue.main.eraseToAnyScheduler()
+        )
+    )
 
     var body: some Scene {
         WindowGroup {

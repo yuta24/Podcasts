@@ -31,6 +31,7 @@ enum SearchPodcastsAction: Equatable {
 }
 
 struct SearchPodcastsEnvironment {
+    var userDefault: UserDefaults
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
@@ -43,7 +44,12 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
         state: \.selection,
         action: /SearchPodcastsAction.displayPodcast,
         environment: {
-            DisplayPodcastEnvironment(networking: $0.networking, mainQueue: $0.mainQueue)
+            DisplayPodcastEnvironment(
+                networking: $0.networking,
+                mainQueue: $0.mainQueue,
+                favoriteWorkflow: FavoritePodcastWorkflow(userDefaults: $0.userDefault),
+                unfavoriteWorkflow: UnfavoritePodcastWorkflow(userDefaults: $0.userDefault)
+            )
         }
     ),
     .init { state, action, environment in

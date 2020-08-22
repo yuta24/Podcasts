@@ -18,3 +18,17 @@ struct PodcastExt: Equatable, Codable {
 
     var isFavorited: Bool
 }
+
+extension PodcastExt {
+    init(_ result: FetchPodcastResult, isFavorited: Bool) {
+        self.title = result.title
+        self.desc = result.desc
+        self.link = result.link
+        self.author = result.author
+        self.imageUrl = result.imageUrl
+        self.summary = result.summary
+        self.episodes = result.episodes
+
+        self.isFavorited = isFavorited
+    }
+}

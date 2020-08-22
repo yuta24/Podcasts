@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 struct DisplayPodcastState: Equatable {
     var podcast: Podcast
-    var fetchResult: FetchPodcastResult?
+    var ext: PodcastExt?
 
     var alertState: AlertState<DisplayPodcastAction>?
 }
@@ -20,12 +20,19 @@ enum DisplayPodcastAction: Equatable {
     case fetch
     case fetchResponse(Result<FetchPodcastResult, Networking.Failure>)
 
+    case favorite
+    case favoriteResponse(Result<PodcastExt, Never>)
+    case unfavorite
+    case unfavoriteResponse(Result<PodcastExt, Never>)
+
     case alertDismissed
 }
 
 struct DisplayPodcastEnvironment {
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var favoriteWorkflow: FavoritePodcastWorkflow
+    var unfavoriteWorkflow: UnfavoritePodcastWorkflow
 }
 
 let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, DisplayPodcastEnvironment> { state, action, environment in
@@ -41,12 +48,52 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
             .map(DisplayPodcastAction.fetchResponse)
 
     case .fetchResponse(.success(let result)):
-        state.fetchResult = result
+        state.ext = .init(result, isFavorited: false)
 
         return .none
 
     case .fetchResponse(.failure(let error)):
         state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+
+        return .none
+
+    case .favorite:
+        guard let ext = state.ext else {
+            return .none
+        }
+
+        return environment.favoriteWorkflow.execute(ext)
+            .eraseToEffect()
+            .receive(on: environment.mainQueue)
+            .catchToEffect()
+            .map(DisplayPodcastAction.favoriteResponse)
+
+    case .favoriteResponse(.success(let ext)):
+        state.ext = ext
+
+        return .none
+
+    case .favoriteResponse(.failure):
+
+        return .none
+
+    case .unfavorite:
+        guard let ext = state.ext else {
+            return .none
+        }
+
+        return environment.unfavoriteWorkflow.execute(ext)
+            .eraseToEffect()
+            .receive(on: environment.mainQueue)
+            .catchToEffect()
+            .map(DisplayPodcastAction.unfavoriteResponse)
+
+    case .unfavoriteResponse(.success(let ext)):
+        state.ext = ext
+
+        return .none
+
+    case .unfavoriteResponse(.failure):
 
         return .none
 
@@ -64,8 +111,16 @@ struct DisplayPodcastView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            if let fetchResult = viewStore.fetchResult {
-                DisplayPodcastResultView(result: fetchResult)
+            if let ext = viewStore.ext {
+                DisplayPodcastResultView(
+                    podcast: ext,
+                    onFavorite: {
+                        viewStore.send(.favorite)
+                    },
+                    onUnfavorite: {
+                        viewStore.send(.unfavorite)
+                    }
+                )
             } else {
                 Text("Loading ...")
                     .onAppear {
