@@ -97,6 +97,9 @@ extension Networking {
             .eraseToAnyPublisher()
         }
     )
+}
+
+extension Networking {
     static let mock = Networking(
         search: { _ in
             Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
