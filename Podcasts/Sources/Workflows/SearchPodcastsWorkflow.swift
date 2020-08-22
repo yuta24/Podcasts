@@ -9,13 +9,13 @@ import Foundation
 import Combine
 
 class SearchPodcastsWorkflow {
-    let networkingClosure: () -> Networking
+    let networking: Networking
 
-    init(networkingClosure: @escaping () -> Networking) {
-        self.networkingClosure = networkingClosure
+    init(networking: Networking) {
+        self.networking = networking
     }
 
     func execute(_ searchText: String) -> AnyPublisher<SearchPodcastResult, Networking.Failure> {
-        networkingClosure().search(searchText)
+        networking.search(searchText)
     }
 }

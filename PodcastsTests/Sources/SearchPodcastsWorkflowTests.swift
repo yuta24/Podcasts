@@ -25,19 +25,17 @@ class SearchPodcastsWorkflowTests: XCTestCase {
     func test_Searching_Empty() throws {
         // Given
         workflow = SearchPodcastsWorkflow(
-            networkingClosure: {
-                Networking(
-                    search: { _ in
-                        Just(SearchPodcastResult(resultCount: 0, results: []))
-                            .setFailureType(to: Networking.Failure.self)
-                            .eraseToAnyPublisher()
-                    },
-                    fetchPodcast: { _ in
-                        Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                            .eraseToAnyPublisher()
-                    }
-                )
-            }
+            networking: Networking(
+                search: { _ in
+                    Just(SearchPodcastResult(resultCount: 0, results: []))
+                        .setFailureType(to: Networking.Failure.self)
+                        .eraseToAnyPublisher()
+                },
+                fetchPodcast: { _ in
+                    Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                        .eraseToAnyPublisher()
+                }
+            )
         )
 
         let expects: SearchPodcastResult = .init(
@@ -66,32 +64,30 @@ class SearchPodcastsWorkflowTests: XCTestCase {
     func test_Searching_Podcasts() throws {
         // Given
         workflow = SearchPodcastsWorkflow(
-            networkingClosure: {
-                Networking(
-                    search: { _ in
-                        Just(
-                            SearchPodcastResult(
-                                resultCount: 1,
-                                results: [
-                                    Podcast(
-                                        trackName: "Track01",
-                                        artistName: "Swift0",
-                                        artworkUrl600: .none,
-                                        trackCount: 123,
-                                        feedUrl: .none
-                                        )
-                                ]
-                            )
+            networking: Networking(
+                search: { _ in
+                    Just(
+                        SearchPodcastResult(
+                            resultCount: 1,
+                            results: [
+                                Podcast(
+                                    trackName: "Track01",
+                                    artistName: "Swift0",
+                                    artworkUrl600: .none,
+                                    trackCount: 123,
+                                    feedUrl: .none
+                                    )
+                            ]
                         )
-                        .setFailureType(to: Networking.Failure.self)
+                    )
+                    .setFailureType(to: Networking.Failure.self)
+                    .eraseToAnyPublisher()
+                },
+                fetchPodcast: { _ in
+                    Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
-                    },
-                    fetchPodcast: { _ in
-                        Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                            .eraseToAnyPublisher()
-                    }
-                )
-            }
+                }
+            )
         )
 
         let expects: SearchPodcastResult = .init(

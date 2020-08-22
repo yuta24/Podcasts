@@ -25,29 +25,27 @@ class FetchPodcastWorkflowTests: XCTestCase {
     func test_Fetching() throws {
         // Given
         workflow = FetchPodcastWorkflow(
-            networkingClosure: {
-                Networking(
-                    search: { _ in
-                        Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                            .eraseToAnyPublisher()
-                    },
-                    fetchPodcast: { _ in
-                        Just(
-                            FetchPodcastResult(
-                                title: "Title",
-                                desc: "Description",
-                                link: URL(string: "https://www.google.com/")!,
-                                author: "yuta24",
-                                imageUrl: .none,
-                                summary: "Summary",
-                                episodes: []
-                            )
-                        )
-                        .setFailureType(to: Networking.Failure.self)
+            networking: Networking(
+                search: { _ in
+                    Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
-                    }
-                )
-            }
+                },
+                fetchPodcast: { _ in
+                    Just(
+                        FetchPodcastResult(
+                            title: "Title",
+                            desc: "Description",
+                            link: URL(string: "https://www.google.com/")!,
+                            author: "yuta24",
+                            imageUrl: .none,
+                            summary: "Summary",
+                            episodes: []
+                        )
+                    )
+                    .setFailureType(to: Networking.Failure.self)
+                    .eraseToAnyPublisher()
+                }
+            )
         )
 
         let expects: FetchPodcastResult = .init(

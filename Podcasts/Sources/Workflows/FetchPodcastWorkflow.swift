@@ -9,13 +9,13 @@ import Foundation
 import Combine
 
 class FetchPodcastWorkflow {
-    let networkingClosure: () -> Networking
+    let networking: Networking
 
-    init(networkingClosure: @escaping () -> Networking) {
-        self.networkingClosure = networkingClosure
+    init(networking: Networking) {
+        self.networking = networking
     }
 
     func execute(_ feedUrl: URL) -> AnyPublisher<FetchPodcastResult, Networking.Failure> {
-        networkingClosure().fetchPodcast(feedUrl)
+        networking.fetchPodcast(feedUrl)
     }
 }
