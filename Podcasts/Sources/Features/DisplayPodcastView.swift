@@ -31,9 +31,9 @@ enum DisplayPodcastAction: Equatable {
 }
 
 struct DisplayPodcastEnvironment {
-    var favoritedPodcastDataStore: FavoritedPodcastDataStore
-    var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var favoritedPodcastDataStore: FavoritedPodcastDataStore
+    var fetchWorkflow: FetchPodcastWorkflow
     var favoriteWorkflow: FavoritePodcastWorkflow
     var unfavoriteWorkflow: UnfavoritePodcastWorkflow
 }
@@ -43,7 +43,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
     switch action {
 
     case .fetch:
-        return environment.networking.fetchPodcast(URL(string: state.podcast.feedUrl!)!)
+        return environment.fetchWorkflow.execute(URL(string: state.podcast.feedUrl!)!)
             .eraseToEffect()
             .receive(on: environment.mainQueue)
             .catchToEffect()

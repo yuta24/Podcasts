@@ -45,9 +45,9 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
         action: /SearchPodcastsAction.displayPodcast,
         environment: {
             DisplayPodcastEnvironment(
-                favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
-                networking: $0.networking,
                 mainQueue: $0.mainQueue,
+                favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
+                fetchWorkflow: FetchPodcastWorkflow(networking: $0.networking),
                 favoriteWorkflow: FavoritePodcastWorkflow(dataStore: $0.favoritedPodcastDataStore),
                 unfavoriteWorkflow: UnfavoritePodcastWorkflow(dataStore: $0.favoritedPodcastDataStore)
             )

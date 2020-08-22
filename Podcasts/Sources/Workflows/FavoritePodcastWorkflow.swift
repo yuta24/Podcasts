@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class FavoritePodcastWorkflow {
+struct FavoritePodcastWorkflow {
     let dataStore: FavoritedPodcastDataStore
 
     init(dataStore: FavoritedPodcastDataStore) {
@@ -16,9 +16,7 @@ class FavoritePodcastWorkflow {
     }
 
     func execute(_ podcast: PodcastExt) -> AnyPublisher<PodcastExt, Never> {
-        let dataStore = self.dataStore
-
-        return Just(mutate(podcast) {
+        Just(mutate(podcast) {
             $0.isFavorited = true
         })
         .handleEvents(receiveOutput: { value in

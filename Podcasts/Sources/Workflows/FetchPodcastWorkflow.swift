@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class FetchPodcastWorkflow {
+struct FetchPodcastWorkflow {
     let networking: Networking
 
     init(networking: Networking) {
