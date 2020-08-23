@@ -128,7 +128,7 @@ struct DisplayPodcastView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             if let ext = viewStore.ext {
-                DisplayPodcastResultView(
+                Component.PodcastExtView(
                     podcast: ext,
                     onFavorite: {
                         viewStore.send(.favorite)

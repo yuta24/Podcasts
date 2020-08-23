@@ -14,6 +14,8 @@ struct FavoritePodcastsState: Equatable {
 }
 
 enum FavoritePodcastsAction: Equatable {
+    case displayPodcast(DisplayPodcastAction)
+
     case subscribe
     case favoritedUpdate(Result<[PodcastExt], Never>)
 }
@@ -26,7 +28,13 @@ struct FavoritePodcastsEnvironment {
 let favoritePodcastsReducer = Reducer<FavoritePodcastsState, FavoritePodcastsAction, FavoritePodcastsEnvironment>.combine(
     .init { state, action, environment in
 
+        struct CancelId: Hashable {}
+
         switch action {
+
+        case .displayPodcast:
+
+            return .none
 
         case .subscribe:
 
@@ -59,7 +67,8 @@ struct FavoritePodcastsView: View {
                 ScrollView {
                     if !viewStore.podcasts.isEmpty {
                         ForEach(Array(viewStore.podcasts.enumerated()), id: \.offset) { offset, podcast in
-                            podcast.title.flatMap(Text.init)
+                            Component.PodcastItemView(item: .podcastExt(podcast))
+                                .padding()
                         }
                     } else {
                         Text("Search podcast and favorite")

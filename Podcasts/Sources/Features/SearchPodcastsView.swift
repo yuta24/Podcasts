@@ -124,37 +124,7 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
         }
 
     }
-
 )
-
-struct SearchPodcastsResultView: View {
-    let podcast: Podcast
-
-    var body: some View {
-        HStack {
-            podcast.artworkUrl600.flatMap {
-                ImageView(image: .init(url: URL(string: $0)!))
-            }
-            .frame(width: 72, height: 72)
-            .cornerRadius(8)
-
-            VStack(alignment: .leading) {
-                podcast.trackName.flatMap(Text.init)
-                    .lineLimit(.none)
-                    .font(.headline)
-                    .foregroundColor(Color(.label))
-                podcast.trackCount.map { "\($0) episodes" }
-                    .flatMap(Text.init)
-                    .font(.footnote)
-                    .foregroundColor(Color(.secondaryLabel))
-
-                Spacer()
-            }
-
-            Spacer()
-        }
-    }
-}
 
 struct SearchPodcastsView: View {
     let store: Store<SearchPodcastsState, SearchPodcastsAction>
@@ -179,7 +149,7 @@ struct SearchPodcastsView: View {
                                 send: SearchPodcastsAction.setNavigation(selection:)
                             ),
                             label: {
-                                SearchPodcastsResultView(podcast: podcast)
+                                Component.PodcastItemView(item: .podcast(podcast))
                                     .padding()
                             }
                         )
