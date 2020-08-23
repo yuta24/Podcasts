@@ -109,6 +109,8 @@
 		2B400BA824F2A5C500F0AE32 /* FavoritePodcastsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastsWidget.swift; sourceTree = "<group>"; };
 		2B400BAA24F2A5C700F0AE32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B400BAC24F2A5C700F0AE32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B400BB424F2AC4800F0AE32 /* Podcasts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Podcasts.entitlements; sourceTree = "<group>"; };
+		2B400BB524F2ACAF00F0AE32 /* FavoritePodcastsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FavoritePodcastsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2B79210524EEA4AD00043684 /* FetchAndDisplayPodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAndDisplayPodcastView.swift; sourceTree = "<group>"; };
 		2B79210824EEB7D300043684 /* PodcastExtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastExtView.swift; sourceTree = "<group>"; };
 		2B79210A24EFFC1F00043684 /* FavoritePodcastWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastWorkflow.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		2B05892724E96A0100D42170 = {
 			isa = PBXGroup;
 			children = (
+				2B400BB524F2ACAF00F0AE32 /* FavoritePodcastsWidgetExtension.entitlements */,
 				2B05893224E96A0100D42170 /* Podcasts */,
 				2B05894424E96A0400D42170 /* PodcastsTests */,
 				2B05894F24E96A0400D42170 /* PodcastsUITests */,
@@ -199,6 +202,7 @@
 		2B05893224E96A0100D42170 /* Podcasts */ = {
 			isa = PBXGroup;
 			children = (
+				2B400BB424F2AC4800F0AE32 /* Podcasts.entitlements */,
 				2B05896324E9748F00D42170 /* Sources */,
 				2B05893724E96A0300D42170 /* Assets.xcassets */,
 				2B05893C24E96A0300D42170 /* Info.plist */,
@@ -729,6 +733,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Podcasts/Podcasts.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Podcasts/Preview Content\"";
 				DEVELOPMENT_TEAM = PS98BD6732;
@@ -752,6 +757,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Podcasts/Podcasts.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Podcasts/Preview Content\"";
 				DEVELOPMENT_TEAM = PS98BD6732;
@@ -858,6 +864,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FavoritePodcastsWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PS98BD6732;
 				INFOPLIST_FILE = FavoritePodcastsWidget/Info.plist;
@@ -879,6 +886,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FavoritePodcastsWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PS98BD6732;
 				INFOPLIST_FILE = FavoritePodcastsWidget/Info.plist;
