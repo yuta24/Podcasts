@@ -16,6 +16,11 @@
 		2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B05896524E974B800D42170 /* FavoritePodcastsView.swift */; };
 		2B400B9624F211F100F0AE32 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B400B9524F211F100F0AE32 /* Component.swift */; };
 		2B400B9C24F276F600F0AE32 /* DisplayPodcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B400B9B24F276F600F0AE32 /* DisplayPodcastView.swift */; };
+		2B400BA424F2A5C500F0AE32 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B400BA324F2A5C500F0AE32 /* WidgetKit.framework */; };
+		2B400BA624F2A5C500F0AE32 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B400BA524F2A5C500F0AE32 /* SwiftUI.framework */; };
+		2B400BA924F2A5C500F0AE32 /* FavoritePodcastsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B400BA824F2A5C500F0AE32 /* FavoritePodcastsWidget.swift */; };
+		2B400BAB24F2A5C700F0AE32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B400BAA24F2A5C700F0AE32 /* Assets.xcassets */; };
+		2B400BAF24F2A5C700F0AE32 /* FavoritePodcastsWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2B400BA124F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2B79210624EEA4AD00043684 /* FetchAndDisplayPodcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79210524EEA4AD00043684 /* FetchAndDisplayPodcastView.swift */; };
 		2B79210924EEB7D300043684 /* PodcastExtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79210824EEB7D300043684 /* PodcastExtView.swift */; };
 		2B79210B24EFFC1F00043684 /* FavoritePodcastWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79210A24EFFC1F00043684 /* FavoritePodcastWorkflow.swift */; };
@@ -60,7 +65,28 @@
 			remoteGlobalIDString = 2B05892F24E96A0100D42170;
 			remoteInfo = Podcasts;
 		};
+		2B400BAD24F2A5C700F0AE32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B05892824E96A0100D42170 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B400BA024F2A5C500F0AE32;
+			remoteInfo = FavoritePodcastsWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2B400BB024F2A5C700F0AE32 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2B400BAF24F2A5C700F0AE32 /* FavoritePodcastsWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2B05893024E96A0100D42170 /* Podcasts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcasts.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +103,12 @@
 		2B05896524E974B800D42170 /* FavoritePodcastsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastsView.swift; sourceTree = "<group>"; };
 		2B400B9524F211F100F0AE32 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		2B400B9B24F276F600F0AE32 /* DisplayPodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPodcastView.swift; sourceTree = "<group>"; };
+		2B400BA124F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FavoritePodcastsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B400BA324F2A5C500F0AE32 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2B400BA524F2A5C500F0AE32 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2B400BA824F2A5C500F0AE32 /* FavoritePodcastsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastsWidget.swift; sourceTree = "<group>"; };
+		2B400BAA24F2A5C700F0AE32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2B400BAC24F2A5C700F0AE32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B79210524EEA4AD00043684 /* FetchAndDisplayPodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAndDisplayPodcastView.swift; sourceTree = "<group>"; };
 		2B79210824EEB7D300043684 /* PodcastExtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastExtView.swift; sourceTree = "<group>"; };
 		2B79210A24EFFC1F00043684 /* FavoritePodcastWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastWorkflow.swift; sourceTree = "<group>"; };
@@ -129,6 +161,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2B400B9E24F2A5C500F0AE32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B400BA624F2A5C500F0AE32 /* SwiftUI.framework in Frameworks */,
+				2B400BA424F2A5C500F0AE32 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -138,6 +179,8 @@
 				2B05893224E96A0100D42170 /* Podcasts */,
 				2B05894424E96A0400D42170 /* PodcastsTests */,
 				2B05894F24E96A0400D42170 /* PodcastsUITests */,
+				2B400BA724F2A5C500F0AE32 /* FavoritePodcastsWidget */,
+				2B400BA224F2A5C500F0AE32 /* Frameworks */,
 				2B05893124E96A0100D42170 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +191,7 @@
 				2B05893024E96A0100D42170 /* Podcasts.app */,
 				2B05894124E96A0400D42170 /* PodcastsTests.xctest */,
 				2B05894C24E96A0400D42170 /* PodcastsUITests.xctest */,
+				2B400BA124F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +289,25 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		2B400BA224F2A5C500F0AE32 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2B400BA324F2A5C500F0AE32 /* WidgetKit.framework */,
+				2B400BA524F2A5C500F0AE32 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B400BA724F2A5C500F0AE32 /* FavoritePodcastsWidget */ = {
+			isa = PBXGroup;
+			children = (
+				2B400BA824F2A5C500F0AE32 /* FavoritePodcastsWidget.swift */,
+				2B400BAA24F2A5C700F0AE32 /* Assets.xcassets */,
+				2B400BAC24F2A5C700F0AE32 /* Info.plist */,
+			);
+			path = FavoritePodcastsWidget;
+			sourceTree = "<group>";
+		};
 		2B79211624F0D16E00043684 /* DataStores */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,10 +369,12 @@
 				2B05892C24E96A0100D42170 /* Sources */,
 				2B05892D24E96A0100D42170 /* Frameworks */,
 				2B05892E24E96A0100D42170 /* Resources */,
+				2B400BB024F2A5C700F0AE32 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2B400BAE24F2A5C700F0AE32 /* PBXTargetDependency */,
 			);
 			name = Podcasts;
 			packageProductDependencies = (
@@ -358,6 +423,23 @@
 			productReference = 2B05894C24E96A0400D42170 /* PodcastsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		2B400BA024F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B400BB324F2A5C700F0AE32 /* Build configuration list for PBXNativeTarget "FavoritePodcastsWidgetExtension" */;
+			buildPhases = (
+				2B400B9D24F2A5C500F0AE32 /* Sources */,
+				2B400B9E24F2A5C500F0AE32 /* Frameworks */,
+				2B400B9F24F2A5C500F0AE32 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FavoritePodcastsWidgetExtension;
+			productName = FavoritePodcastsWidgetExtension;
+			productReference = 2B400BA124F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -377,6 +459,9 @@
 					2B05894B24E96A0400D42170 = {
 						CreatedOnToolsVersion = 12.0;
 						TestTargetID = 2B05892F24E96A0100D42170;
+					};
+					2B400BA024F2A5C500F0AE32 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -402,6 +487,7 @@
 				2B05892F24E96A0100D42170 /* Podcasts */,
 				2B05894024E96A0400D42170 /* PodcastsTests */,
 				2B05894B24E96A0400D42170 /* PodcastsUITests */,
+				2B400BA024F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -427,6 +513,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B400B9F24F2A5C500F0AE32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B400BAB24F2A5C700F0AE32 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +578,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2B400B9D24F2A5C500F0AE32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B400BA924F2A5C500F0AE32 /* FavoritePodcastsWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -496,6 +598,11 @@
 			isa = PBXTargetDependency;
 			target = 2B05892F24E96A0100D42170 /* Podcasts */;
 			targetProxy = 2B05894D24E96A0400D42170 /* PBXContainerItemProxy */;
+		};
+		2B400BAE24F2A5C700F0AE32 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B400BA024F2A5C500F0AE32 /* FavoritePodcastsWidgetExtension */;
+			targetProxy = 2B400BAD24F2A5C700F0AE32 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -619,6 +726,7 @@
 		2B05895624E96A0400D42170 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -641,6 +749,7 @@
 		2B05895724E96A0400D42170 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -744,6 +853,48 @@
 			};
 			name = Release;
 		};
+		2B400BB124F2A5C700F0AE32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PS98BD6732;
+				INFOPLIST_FILE = FavoritePodcastsWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bivre.podcasts.favoritepodcastswidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2B400BB224F2A5C700F0AE32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PS98BD6732;
+				INFOPLIST_FILE = FavoritePodcastsWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bivre.podcasts.favoritepodcastswidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -779,6 +930,15 @@
 			buildConfigurations = (
 				2B05895C24E96A0400D42170 /* Debug */,
 				2B05895D24E96A0400D42170 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B400BB324F2A5C700F0AE32 /* Build configuration list for PBXNativeTarget "FavoritePodcastsWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B400BB124F2A5C700F0AE32 /* Debug */,
+				2B400BB224F2A5C700F0AE32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
