@@ -36,6 +36,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             SearchPodcastsEnvironment(
                 networking: $0.networking,
                 mainQueue: $0.mainQueue,
+                searchWorkflow: SearchPodcastsWorkflow(networking: $0.networking),
                 favoritedPodcastDataStore: $0.favoritedPodcastDataStore
             )
         }

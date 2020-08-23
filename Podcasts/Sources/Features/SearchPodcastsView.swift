@@ -33,6 +33,7 @@ enum SearchPodcastsAction: Equatable {
 struct SearchPodcastsEnvironment {
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var searchWorkflow: SearchPodcastsWorkflow
     var favoritedPodcastDataStore: FavoritedPodcastDataStore
 }
 
@@ -71,7 +72,7 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
               return .cancel(id: SearchId())
             }
 
-            return environment.networking.search(state.searchText)
+            return environment.searchWorkflow.execute(state.searchText)
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
