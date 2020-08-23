@@ -1,8 +1,8 @@
 //
-//  FavoritePodcastsWidget.swift
-//  FavoritePodcastsWidget
+//  PodcastsWidget.swift
+//  PodcastsWidget
 //
-//  Created by Yu Tawata on 2020/08/23.
+//  Created by Yu Tawata on 2020/08/24.
 //
 
 import WidgetKit
@@ -38,7 +38,7 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
 }
 
-struct FavoritePodcastsWidgetEntryView : View {
+struct PodcastsWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -47,21 +47,21 @@ struct FavoritePodcastsWidgetEntryView : View {
 }
 
 @main
-struct FavoritePodcastsWidget: Widget {
-    let kind: String = "FavoritePodcastsWidget"
+struct PodcastsWidget: Widget {
+    let kind: String = "PodcastsWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            FavoritePodcastsWidgetEntryView(entry: entry)
+            PodcastsWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
     }
 }
 
-struct FavoritePodcastsWidget_Previews: PreviewProvider {
+struct PodcastsWidget_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritePodcastsWidgetEntryView(entry: SimpleEntry(date: Date()))
+        PodcastsWidgetEntryView(entry: SimpleEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
