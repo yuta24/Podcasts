@@ -8,6 +8,7 @@
 import Combine
 import SwiftUI
 import ComposableArchitecture
+import Core
 
 struct FavoritePodcastsState: Equatable {
     var podcasts: [PodcastExt]

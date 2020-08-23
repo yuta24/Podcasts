@@ -25,30 +25,6 @@ private let decoder: JSONDecoder = {
 
 private let logger = Logger(subsystem: "com.bivre.podcasts", category: "Networking")
 
-extension Episode {
-    init(_ feed: RSSFeedItem) {
-        self.title = feed.title
-        self.desc = feed.description
-        self.pubDate = feed.pubDate
-        self.link = feed.link.flatMap(URL.init(string:))
-        self.subtitle = feed.iTunes?.iTunesSubtitle
-        self.duration = feed.iTunes?.iTunesDuration
-        self.enclosure = feed.enclosure?.attributes?.url.flatMap(URL.init(string:))
-    }
-}
-
-extension FetchPodcastResult {
-    init(_ rss: RSSFeed) {
-        self.title = rss.title
-        self.desc = rss.description
-        self.link = rss.link.flatMap(URL.init(string:))
-        self.author = rss.iTunes?.iTunesAuthor
-        self.imageUrl = rss.iTunes?.iTunesImage?.attributes?.href.flatMap(URL.init(string:))
-        self.summary = rss.iTunes?.iTunesSummary
-        self.episodes = rss.items?.compactMap(Episode.init) ?? []
-    }
-}
-
 extension Networking {
     static let live = Networking(
         search: { searchText in

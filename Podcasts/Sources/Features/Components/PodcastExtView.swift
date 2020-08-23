@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FetchImage
+import Core
 
 extension Component {
     struct PodcastExtView: View {

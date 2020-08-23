@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Core
 @testable import Podcasts
 
 class FavoritedPodcastDataStoreSpy {

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Core
 
 struct UnfavoritePodcastWorkflow {
     let dataStore: FavoritedPodcastDataStore

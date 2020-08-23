@@ -9,6 +9,7 @@ import Combine
 import SwiftUI
 import ComposableArchitecture
 import FetchImage
+import Core
 
 struct SearchPodcastsState: Equatable {
     var searchText: String

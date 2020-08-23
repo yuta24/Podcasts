@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Core
 
 struct AppState: Equatable {
     var selected: Int

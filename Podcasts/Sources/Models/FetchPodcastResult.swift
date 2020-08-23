@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 struct FetchPodcastResult: Equatable {
     var title: String?

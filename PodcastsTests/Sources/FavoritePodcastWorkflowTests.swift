@@ -7,6 +7,7 @@
 
 import Combine
 import XCTest
+import Core
 @testable import Podcasts
 
 class FavoritePodcastWorkflowTests: XCTestCase {

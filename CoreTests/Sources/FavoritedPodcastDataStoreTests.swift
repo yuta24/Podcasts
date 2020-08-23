@@ -7,7 +7,7 @@
 
 import Combine
 import XCTest
-@testable import Podcasts
+@testable import Core
 
 class FavoritedPodcastDataStoreTests: XCTestCase {
     private var store: FavoritedPodcastDataStore!
@@ -16,12 +16,12 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        UserDefaults.standard.removeObject(forKey: "favorites")
+        UserDefaults(suiteName: "group.com.bivre.podcast")!.removeObject(forKey: "favorites")
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        UserDefaults.standard.removeObject(forKey: "favorites")
+        UserDefaults(suiteName: "group.com.bivre.podcast")!.removeObject(forKey: "favorites")
     }
 
     func test_Changed() throws {

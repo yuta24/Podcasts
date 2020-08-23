@@ -7,7 +7,7 @@
 
 import Foundation
 
-func mutate<V>(_ value: V, _ closure: (inout V) -> Void) -> V where V: Any {
+public func mutate<V>(_ value: V, _ closure: (inout V) -> Void) -> V where V: Any {
     var new = value
     closure(&new)
     return new
