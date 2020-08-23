@@ -31,9 +31,9 @@ enum SearchPodcastsAction: Equatable {
 }
 
 struct SearchPodcastsEnvironment {
-    var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var favoritedPodcastDataStore: FavoritedPodcastDataStore
 }
 
 let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, SearchPodcastsEnvironment>.combine(

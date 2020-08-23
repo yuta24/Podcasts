@@ -12,18 +12,20 @@ struct AppState: Equatable {
     var selected: Int
 
     var searchPodcastsState: SearchPodcastsState
+    var favoritePodcastsState: FavoritePodcastsState
 }
 
 enum AppAction: Equatable {
     case tabSelected(Int)
 
     case searchPodcasts(SearchPodcastsAction)
+    case favoritePodcasts(FavoritePodcastsAction)
 }
 
 struct AppEnvironment {
-    var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var favoritedPodcastDataStore: FavoritedPodcastDataStore
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -32,9 +34,19 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         action: /AppAction.searchPodcasts,
         environment: {
             SearchPodcastsEnvironment(
-                favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
                 networking: $0.networking,
-                mainQueue: $0.mainQueue
+                mainQueue: $0.mainQueue,
+                favoritedPodcastDataStore: $0.favoritedPodcastDataStore
+            )
+        }
+    ),
+    favoritePodcastsReducer.pullback(
+        state: \.favoritePodcastsState,
+        action: /AppAction.favoritePodcasts,
+        environment: {
+            FavoritePodcastsEnvironment(
+                mainQueue: $0.mainQueue,
+                favoritedPodcastDataStore: $0.favoritedPodcastDataStore
             )
         }
     ),
@@ -51,6 +63,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
 
             return .none
 
+        case .favoritePodcasts:
+
+            return .none
+
         }
 
     }
@@ -59,12 +75,16 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
 @main
 struct PodcastsApp: App {
     let store = Store<AppState, AppAction>(
-        initialState: .init(selected: 0, searchPodcastsState: .init(searchText: "", podcasts: [])),
+        initialState: .init(
+            selected: 0,
+            searchPodcastsState: .init(searchText: "", podcasts: []),
+            favoritePodcastsState: .init(podcasts: [])
+        ),
         reducer: appReducer.debug(),
         environment: .init(
-            favoritedPodcastDataStore: .live,
             networking: .live,
-            mainQueue: DispatchQueue.main.eraseToAnyScheduler()
+            mainQueue: DispatchQueue.main.eraseToAnyScheduler(),
+            favoritedPodcastDataStore: .live
         )
     )
 
@@ -79,7 +99,7 @@ struct PodcastsApp: App {
                             Text("Search")
                         }
                         .tag(0)
-                    FavoritePodcastsView()
+                    FavoritePodcastsView(store: store.scope(state: \.favoritePodcastsState, action: AppAction.favoritePodcasts))
                         .tabItem {
                             Image(systemName: "star.fill")
                             Text("Favorite")
