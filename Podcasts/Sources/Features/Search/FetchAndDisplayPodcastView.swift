@@ -1,5 +1,5 @@
 //
-//  DisplayPodcastView.swift
+//  FetchAndDisplayPodcastView.swift
 //  Podcasts
 //
 //  Created by Yu Tawata on 2020/08/20.
@@ -9,14 +9,14 @@ import Combine
 import SwiftUI
 import ComposableArchitecture
 
-struct DisplayPodcastState: Equatable {
+struct FetchAndDisplayPodcastState: Equatable {
     var podcast: Podcast
     var ext: PodcastExt?
 
-    var alertState: AlertState<DisplayPodcastAction>?
+    var alertState: AlertState<FetchAndDisplayPodcastAction>?
 }
 
-enum DisplayPodcastAction: Equatable {
+enum FetchAndDisplayPodcastAction: Equatable {
     case fetch
     case fetchResponse(Result<FetchPodcastResult, Networking.Failure>)
     case load(FetchPodcastResult)
@@ -30,7 +30,7 @@ enum DisplayPodcastAction: Equatable {
     case alertDismissed
 }
 
-struct DisplayPodcastEnvironment {
+struct FetchAndDisplayPodcastEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var fetchWorkflow: FetchPodcastWorkflow
@@ -38,7 +38,7 @@ struct DisplayPodcastEnvironment {
     var unfavoriteWorkflow: UnfavoritePodcastWorkflow
 }
 
-let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, DisplayPodcastEnvironment>.combine(
+let fetchAndDisplayPodcastReducer = Reducer<FetchAndDisplayPodcastState, FetchAndDisplayPodcastAction, FetchAndDisplayPodcastEnvironment>.combine(
     .init { state, action, environment in
 
         switch action {
@@ -48,7 +48,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(DisplayPodcastAction.fetchResponse)
+                .map(FetchAndDisplayPodcastAction.fetchResponse)
 
         case .fetchResponse(.success(let result)):
             return .init(value: .load(result))
@@ -65,7 +65,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(DisplayPodcastAction.loadResult)
+                .map(FetchAndDisplayPodcastAction.loadResult)
 
         case .loadResult(.success(let tuple)):
             state.ext = .init(tuple.value0, isFavorited: tuple.value1?.isFavorited ?? false)
@@ -81,7 +81,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(DisplayPodcastAction.favoriteResponse)
+                .map(FetchAndDisplayPodcastAction.favoriteResponse)
 
         case .favoriteResponse(.success(let ext)):
             state.ext = ext
@@ -101,7 +101,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(DisplayPodcastAction.unfavoriteResponse)
+                .map(FetchAndDisplayPodcastAction.unfavoriteResponse)
 
         case .unfavoriteResponse(.success(let ext)):
             state.ext = ext
@@ -122,8 +122,8 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
     }
 )
 
-struct DisplayPodcastView: View {
-    let store: Store<DisplayPodcastState, DisplayPodcastAction>
+struct FetchAndDisplayPodcastView: View {
+    let store: Store<FetchAndDisplayPodcastState, FetchAndDisplayPodcastAction>
 
     var body: some View {
         WithViewStore(store) { viewStore in

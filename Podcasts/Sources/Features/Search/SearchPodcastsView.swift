@@ -14,12 +14,12 @@ struct SearchPodcastsState: Equatable {
     var searchText: String
     var podcasts: [Podcast]
 
-    var selection: Identified<Int, DisplayPodcastState?>?
+    var selection: Identified<Int, FetchAndDisplayPodcastState?>?
     var alertState: AlertState<SearchPodcastsAction>?
 }
 
 enum SearchPodcastsAction: Equatable {
-    case displayPodcast(DisplayPodcastAction)
+    case fetchAndDisplayPodcast(FetchAndDisplayPodcastAction)
 
     case search
     case searchTextChanged(String)
@@ -38,14 +38,14 @@ struct SearchPodcastsEnvironment {
 }
 
 let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, SearchPodcastsEnvironment>.combine(
-    displayPodcastReducer.optional()
+    fetchAndDisplayPodcastReducer.optional()
         .pullback(state: \Identified.value, action: .self, environment: { $0 })
         .optional()
         .pullback(
         state: \.selection,
-        action: /SearchPodcastsAction.displayPodcast,
+        action: /SearchPodcastsAction.fetchAndDisplayPodcast,
         environment: {
-            DisplayPodcastEnvironment(
+            FetchAndDisplayPodcastEnvironment(
                 mainQueue: $0.mainQueue,
                 favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
                 fetchWorkflow: FetchPodcastWorkflow(networking: $0.networking),
@@ -60,7 +60,7 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
 
         switch action {
 
-        case .displayPodcast:
+        case .fetchAndDisplayPodcast:
 
             return .none
 
@@ -141,8 +141,11 @@ struct SearchPodcastsView: View {
                     ForEach(Array(viewStore.podcasts.enumerated()), id: \.offset) { offset, podcast in
                         NavigationLink(
                             destination: IfLetStore(
-                                store.scope(state: { $0.selection?.value }, action: SearchPodcastsAction.displayPodcast),
-                                then: DisplayPodcastView.init(store:)
+                                store.scope(
+                                    state: { $0.selection?.value },
+                                    action: SearchPodcastsAction.fetchAndDisplayPodcast
+                                ),
+                                then: FetchAndDisplayPodcastView.init(store:)
                             ),
                             tag: offset,
                             selection: viewStore.binding(
