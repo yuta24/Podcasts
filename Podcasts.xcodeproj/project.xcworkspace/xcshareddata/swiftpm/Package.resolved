@@ -54,6 +54,15 @@
           "revision": "7f482acbf4c108655ae269a6445831ce1890762e",
           "version": "0.7.0"
         }
+      },
+      {
+        "package": "SwiftSQL",
+        "repositoryURL": "https://github.com/kean/SwiftSQL.git",
+        "state": {
+          "branch": null,
+          "revision": "1b4daa2558e3a9d5b56e9481b712aad4ab4e355a",
+          "version": "0.2.0"
+        }
       }
     ]
   },

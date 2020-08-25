@@ -26,7 +26,6 @@
 		2B79211E24F15ADD00043684 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211D24F15ADD00043684 /* Tuples.swift */; };
 		2B79212124F206D900043684 /* PodcastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79212024F206D900043684 /* PodcastItemView.swift */; };
 		2B7BB6B324EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */; };
-		2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B424EA0F6400D48B20 /* Podcast.swift */; };
 		2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */; };
 		2B7BB6BA24EA13F000D48B20 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B924EA13F000D48B20 /* Networking.swift */; };
 		2B7BB6BE24EA27B300D48B20 /* SearchPodcastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */; };
@@ -38,6 +37,12 @@
 		2B7BB6DE24EC176300D48B20 /* FetchPodcastWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */; };
 		2B7BB6E024EC189300D48B20 /* FetchPodcastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */; };
 		2B7BB6E224EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */; };
+		2B7EB4AF24F53FBB004CF488 /* PlayingEpisodeDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4AE24F53FBB004CF488 /* PlayingEpisodeDataStore.swift */; };
+		2B7EB4B724F54167004CF488 /* SwiftSQL in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7EB4B624F54167004CF488 /* SwiftSQL */; };
+		2B7EB4B924F54167004CF488 /* SwiftSQLExt in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7EB4B824F54167004CF488 /* SwiftSQLExt */; };
+		2B7EB4BD24F545A4004CF488 /* PlayingEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */; };
+		2B7EB4C024F54C99004CF488 /* SQLDataType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */; };
+		2B7EB4C124F54F96004CF488 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B424EA0F6400D48B20 /* Podcast.swift */; };
 		2BDEC9F424F3260E0079F839 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDEC9EB24F3260E0079F839 /* Core.framework */; };
 		2BDEC9FD24F3260E0079F839 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BDEC9ED24F3260E0079F839 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BDECA0024F3260E0079F839 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDEC9EB24F3260E0079F839 /* Core.framework */; };
@@ -189,6 +194,9 @@
 		2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastWorkflow.swift; sourceTree = "<group>"; };
 		2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastResult.swift; sourceTree = "<group>"; };
 		2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPodcastWorkflowTests.swift; sourceTree = "<group>"; };
+		2B7EB4AE24F53FBB004CF488 /* PlayingEpisodeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisodeDataStore.swift; sourceTree = "<group>"; };
+		2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisode.swift; sourceTree = "<group>"; };
+		2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLDataType+Extension.swift"; sourceTree = "<group>"; };
 		2BDEC9EB24F3260E0079F839 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDEC9ED24F3260E0079F839 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		2BDEC9EE24F3260E0079F839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -235,6 +243,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7EB4B724F54167004CF488 /* SwiftSQL in Frameworks */,
+				2B7EB4B924F54167004CF488 /* SwiftSQLExt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +365,6 @@
 				2BDECA1624F327FD0079F839 /* Episode+Extension.swift */,
 				2B7BB6DF24EC189300D48B20 /* FetchPodcastResult.swift */,
 				2BDECA1824F328380079F839 /* FetchPodcastResult+Extension.swift */,
-				2B7BB6B424EA0F6400D48B20 /* Podcast.swift */,
 				2BDECA1A24F328560079F839 /* PodcastExt+Extension.swift */,
 				2B7BB6BD24EA27B300D48B20 /* SearchPodcastResult.swift */,
 			);
@@ -393,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				2B79211724F0D19D00043684 /* FavoritedPodcastDataStore.swift */,
+				2B7EB4AE24F53FBB004CF488 /* PlayingEpisodeDataStore.swift */,
 			);
 			path = DataStores;
 			sourceTree = "<group>";
@@ -439,6 +449,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2B7EB4BE24F54C77004CF488 /* SwiftSQL */ = {
+			isa = PBXGroup;
+			children = (
+				2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */,
+			);
+			path = SwiftSQL;
+			sourceTree = "<group>";
+		};
 		2BDEC9EC24F3260E0079F839 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +487,7 @@
 		2BDECA0A24F326320079F839 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2B7EB4BE24F54C77004CF488 /* SwiftSQL */,
 				2B79211024F0017F00043684 /* Mutate.swift */,
 				2BDECA1024F326860079F839 /* Models */,
 				2B79211624F0D16E00043684 /* DataStores */,
@@ -480,6 +499,8 @@
 			isa = PBXGroup;
 			children = (
 				2B7BB6DB24EC16AA00D48B20 /* Episode.swift */,
+				2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */,
+				2B7BB6B424EA0F6400D48B20 /* Podcast.swift */,
 				2B79210E24EFFFBC00043684 /* PodcastExt.swift */,
 			);
 			path = Models;
@@ -586,6 +607,10 @@
 			dependencies = (
 			);
 			name = Core;
+			packageProductDependencies = (
+				2B7EB4B624F54167004CF488 /* SwiftSQL */,
+				2B7EB4B824F54167004CF488 /* SwiftSQLExt */,
+			);
 			productName = Core;
 			productReference = 2BDEC9EB24F3260E0079F839 /* Core.framework */;
 			productType = "com.apple.product-type.framework";
@@ -674,6 +699,7 @@
 				2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */,
 				2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */,
 				2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */,
+				2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */,
 			);
 			productRefGroup = 2B05893124E96A0100D42170 /* Products */;
 			projectDirPath = "";
@@ -760,7 +786,6 @@
 				2B7BB6D724EC0A3500D48B20 /* SearchNavigation.swift in Sources */,
 				2B79211E24F15ADD00043684 /* Tuples.swift in Sources */,
 				2B79210924EEB7D300043684 /* PodcastExtView.swift in Sources */,
-				2B7BB6B524EA0F6400D48B20 /* Podcast.swift in Sources */,
 				2B05896224E9748500D42170 /* SearchPodcastsView.swift in Sources */,
 				2BDECA1924F328380079F839 /* FetchPodcastResult+Extension.swift in Sources */,
 				2BDECA1724F327FD0079F839 /* Episode+Extension.swift in Sources */,
@@ -791,9 +816,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7EB4BD24F545A4004CF488 /* PlayingEpisode.swift in Sources */,
+				2B7EB4AF24F53FBB004CF488 /* PlayingEpisodeDataStore.swift in Sources */,
 				2BDECA1224F327220079F839 /* PodcastExt.swift in Sources */,
+				2B7EB4C024F54C99004CF488 /* SQLDataType+Extension.swift in Sources */,
 				2BDECA1124F3271D0079F839 /* Episode.swift in Sources */,
 				2BDECA1324F327270079F839 /* FavoritedPodcastDataStore.swift in Sources */,
+				2B7EB4C124F54F96004CF488 /* Podcast.swift in Sources */,
 				2BDECA1524F327420079F839 /* Mutate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1344,6 +1373,14 @@
 				minimumVersion = 9.1.2;
 			};
 		};
+		2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/SwiftSQL.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1366,6 +1403,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */;
 			productName = FeedKit;
+		};
+		2B7EB4B624F54167004CF488 /* SwiftSQL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */;
+			productName = SwiftSQL;
+		};
+		2B7EB4B824F54167004CF488 /* SwiftSQLExt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */;
+			productName = SwiftSQLExt;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

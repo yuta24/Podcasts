@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 struct SearchPodcastResult: Equatable, Decodable {
     var resultCount: Int
