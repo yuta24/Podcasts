@@ -10,19 +10,19 @@ import Combine
 import OSLog
 
 public struct FavoritedPodcastDataStore {
-    public var fetchs: () -> AnyPublisher<[PodcastExt], Never>
-    public var fetch: (URL) -> AnyPublisher<PodcastExt?, Never>
-    public var append: (PodcastExt) -> Void
-    public var remove: (PodcastExt) -> Void
+    public var fetchs: () -> AnyPublisher<[Podcast], Never>
+    public var fetch: (URL) -> AnyPublisher<Podcast?, Never>
+    public var append: (Podcast) -> Void
+    public var remove: (Podcast) -> Void
 
-    public var changed: () -> AnyPublisher<[PodcastExt], Never>
+    public var changed: () -> AnyPublisher<[Podcast], Never>
 
     public init(
-        fetchs: @escaping () -> AnyPublisher<[PodcastExt], Never>,
-        fetch: @escaping (URL) -> AnyPublisher<PodcastExt?, Never>,
-        append: @escaping (PodcastExt) -> Void,
-        remove: @escaping (PodcastExt) -> Void,
-        changed: @escaping () -> AnyPublisher<[PodcastExt], Never>
+        fetchs: @escaping () -> AnyPublisher<[Podcast], Never>,
+        fetch: @escaping (URL) -> AnyPublisher<Podcast?, Never>,
+        append: @escaping (Podcast) -> Void,
+        remove: @escaping (Podcast) -> Void,
+        changed: @escaping () -> AnyPublisher<[Podcast], Never>
     ) {
         self.fetchs = fetchs
         self.fetch = fetch
@@ -48,31 +48,31 @@ extension FavoritedPodcastDataStore {
         fetchs: {
             Just(userDefaults.favorites)
                 .map {
-                    try? decoder.decode([PodcastExt].self, from: $0)
+                    try? decoder.decode([Podcast].self, from: $0)
                 }
                 .map { $0 ?? [] }
                 .eraseToAnyPublisher()
         },
-        fetch: { link in
+        fetch: { feedUrl in
             Just(())
-                .map { _ -> PodcastExt? in
-                    let array = try? decoder.decode([PodcastExt].self, from: userDefaults.favorites)
-                    return array?.first(where: { $0.link == link })
+                .map { _ -> Podcast? in
+                    let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
+                    return array?.first(where: { $0.feedUrl == feedUrl })
                 }
                 .eraseToAnyPublisher()
         },
-        append: { ext in
-            let array = try? decoder.decode([PodcastExt].self, from: userDefaults.favorites)
+        append: { podcast in
+            let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
             let new = mutate(array ?? []) {
-                $0.append(ext)
+                $0.append(podcast)
             }
             let data = try! encoder.encode(new)
             userDefaults.setValue(data, forKey: "favorites")
         },
-        remove: { ext in
-            let array = try? decoder.decode([PodcastExt].self, from: userDefaults.favorites)
+        remove: { podcast in
+            let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
             let new = mutate(array ?? []) {
-                $0.removeAll(where: { $0.link == ext.link })
+                $0.removeAll(where: { $0.feedUrl == podcast.feedUrl })
             }
             let data = try! encoder.encode(new)
             userDefaults.setValue(data, forKey: "favorites")
@@ -83,7 +83,7 @@ extension FavoritedPodcastDataStore {
                 .eraseToAnyPublisher()
                 .eraseToAnyPublisher()
                 .map {
-                    try? decoder.decode([PodcastExt].self, from: $0)
+                    try? decoder.decode([Podcast].self, from: $0)
                 }
                 .map { $0 ?? [] }
                 .eraseToAnyPublisher()

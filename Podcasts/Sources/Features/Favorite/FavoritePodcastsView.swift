@@ -11,7 +11,7 @@ import ComposableArchitecture
 import Core
 
 struct FavoritePodcastsState: Equatable {
-    var podcasts: [PodcastExt]
+    var podcasts: [Podcast]
 
     var selection: Identified<Int, DisplayPodcastState?>?
 }
@@ -20,13 +20,14 @@ enum FavoritePodcastsAction: Equatable {
     case displayPodcast(DisplayPodcastAction)
 
     case subscribe
-    case favoritedUpdate(Result<[PodcastExt], Never>)
+    case favoritedUpdate(Result<[Podcast], Never>)
 
     case setNavigation(selection: Int?)
     case setNavigationSelectionDelayCompleted
 }
 
 struct FavoritePodcastsEnvironment {
+    var networking: Networking
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var favoritedPodcastDataStore: FavoritedPodcastDataStore
 }
@@ -42,6 +43,7 @@ let favoritePodcastsReducer = Reducer<FavoritePodcastsState, FavoritePodcastsAct
             DisplayPodcastEnvironment(
                 mainQueue: $0.mainQueue,
                 favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
+                fetchWorkflow: FetchPodcastWorkflow(networking: $0.networking),
                 favoriteWorkflow: FavoritePodcastWorkflow(dataStore: $0.favoritedPodcastDataStore),
                 unfavoriteWorkflow: UnfavoritePodcastWorkflow(dataStore: $0.favoritedPodcastDataStore)
             )
@@ -65,8 +67,8 @@ let favoritePodcastsReducer = Reducer<FavoritePodcastsState, FavoritePodcastsAct
                 .catchToEffect()
                 .map(FavoritePodcastsAction.favoritedUpdate)
 
-        case .favoritedUpdate(.success(let exts)):
-            state.podcasts = exts
+        case .favoritedUpdate(.success(let podcasts)):
+            state.podcasts = podcasts
 
             return .none
 
@@ -124,7 +126,7 @@ struct FavoritePodcastsView: View {
                                     send: FavoritePodcastsAction.setNavigation(selection:)
                                 ),
                                 label: {
-                                    Component.PodcastItemView(item: .podcastExt(podcast))
+                                    Component.PodcastItemView(item: .podcast(podcast))
                                         .padding()
                                 }
                             )

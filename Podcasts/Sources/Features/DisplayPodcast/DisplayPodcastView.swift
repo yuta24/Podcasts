@@ -1,5 +1,5 @@
 //
-//  FetchAndDisplayPodcastView.swift
+//  DisplayPodcastView.swift
 //  Podcasts
 //
 //  Created by Yu Tawata on 2020/08/20.
@@ -10,28 +10,43 @@ import SwiftUI
 import ComposableArchitecture
 import Core
 
-struct FetchAndDisplayPodcastState: Equatable {
+struct DisplayPodcastState: Equatable {
     var podcast: Podcast
     var ext: PodcastExt?
 
-    var alertState: AlertState<FetchAndDisplayPodcastAction>?
+    var alertState: AlertState<DisplayPodcastAction>?
 }
 
-enum FetchAndDisplayPodcastAction: Equatable {
+enum DisplayPodcastAction: Equatable {
     case fetch
     case fetchResponse(Result<FetchPodcastResult, Networking.Failure>)
     case load(FetchPodcastResult)
-    case loadResult(Result<Tuple2<FetchPodcastResult, PodcastExt?>, Never>)
+    case loadResult(Result<Tuple2<FetchPodcastResult, Podcast?>, Never>)
 
     case favorite
-    case favoriteResponse(Result<PodcastExt, Never>)
+    case favoriteResponse(Result<Void, Never>)
     case unfavorite
-    case unfavoriteResponse(Result<PodcastExt, Never>)
+    case unfavoriteResponse(Result<Void, Never>)
 
     case alertDismissed
+
+    static func == (lhs: DisplayPodcastAction, rhs: DisplayPodcastAction) -> Bool {
+        switch (lhs, rhs) {
+        case (.favoriteResponse(.success), .favoriteResponse(.success)):
+            return true
+        case (.favoriteResponse(.failure), .favoriteResponse(.failure)):
+            return true
+        case (.unfavoriteResponse(.success), .unfavoriteResponse(.success)):
+            return true
+        case (.unfavoriteResponse(.failure), .unfavoriteResponse(.failure)):
+            return true
+        case (let l, let r):
+            return l == r
+        }
+    }
 }
 
-struct FetchAndDisplayPodcastEnvironment {
+struct DisplayPodcastEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var favoritedPodcastDataStore: FavoritedPodcastDataStore
     var fetchWorkflow: FetchPodcastWorkflow
@@ -39,17 +54,17 @@ struct FetchAndDisplayPodcastEnvironment {
     var unfavoriteWorkflow: UnfavoritePodcastWorkflow
 }
 
-let fetchAndDisplayPodcastReducer = Reducer<FetchAndDisplayPodcastState, FetchAndDisplayPodcastAction, FetchAndDisplayPodcastEnvironment>.combine(
+let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, DisplayPodcastEnvironment>.combine(
     .init { state, action, environment in
 
         switch action {
 
         case .fetch:
-            return environment.fetchWorkflow.execute(URL(string: state.podcast.feedUrl!)!)
+            return environment.fetchWorkflow.execute(state.podcast.feedUrl!)
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(FetchAndDisplayPodcastAction.fetchResponse)
+                .map(DisplayPodcastAction.fetchResponse)
 
         case .fetchResponse(.success(let result)):
             return .init(value: .load(result))
@@ -60,32 +75,27 @@ let fetchAndDisplayPodcastReducer = Reducer<FetchAndDisplayPodcastState, FetchAn
             return .none
 
         case .load(let result):
-
-            return environment.favoritedPodcastDataStore.fetch(result.link!)
+            return environment.favoritedPodcastDataStore.fetch(state.podcast.feedUrl!)
                 .map { Tuple2(value0: result, value1: $0) }
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(FetchAndDisplayPodcastAction.loadResult)
+                .map(DisplayPodcastAction.loadResult)
 
         case .loadResult(.success(let tuple)):
-            state.ext = .init(tuple.value0, isFavorited: tuple.value1?.isFavorited ?? false)
+            state.ext = .init(tuple.value0, isFavorited: tuple.value1 != .none)
 
             return .none
 
         case .favorite:
-            guard let ext = state.ext else {
-                return .none
-            }
-
-            return environment.favoriteWorkflow.execute(ext)
+            return environment.favoriteWorkflow.execute(state.podcast)
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(FetchAndDisplayPodcastAction.favoriteResponse)
+                .map(DisplayPodcastAction.favoriteResponse)
 
-        case .favoriteResponse(.success(let ext)):
-            state.ext = ext
+        case .favoriteResponse(.success):
+            state.ext?.isFavorited = true
 
             return .none
 
@@ -94,18 +104,14 @@ let fetchAndDisplayPodcastReducer = Reducer<FetchAndDisplayPodcastState, FetchAn
             return .none
 
         case .unfavorite:
-            guard let ext = state.ext else {
-                return .none
-            }
-
-            return environment.unfavoriteWorkflow.execute(ext)
+            return environment.unfavoriteWorkflow.execute(state.podcast)
                 .eraseToEffect()
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
-                .map(FetchAndDisplayPodcastAction.unfavoriteResponse)
+                .map(DisplayPodcastAction.unfavoriteResponse)
 
-        case .unfavoriteResponse(.success(let ext)):
-            state.ext = ext
+        case .unfavoriteResponse(.success):
+            state.ext?.isFavorited = false
 
             return .none
 
@@ -123,8 +129,8 @@ let fetchAndDisplayPodcastReducer = Reducer<FetchAndDisplayPodcastState, FetchAn
     }
 )
 
-struct FetchAndDisplayPodcastView: View {
-    let store: Store<FetchAndDisplayPodcastState, FetchAndDisplayPodcastAction>
+struct DisplayPodcastView: View {
+    let store: Store<DisplayPodcastState, DisplayPodcastAction>
 
     var body: some View {
         WithViewStore(store) { viewStore in

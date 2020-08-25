@@ -47,6 +47,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         action: /AppAction.favoritePodcasts,
         environment: {
             FavoritePodcastsEnvironment(
+                networking: $0.networking,
                 mainQueue: $0.mainQueue,
                 favoritedPodcastDataStore: $0.favoritedPodcastDataStore
             )

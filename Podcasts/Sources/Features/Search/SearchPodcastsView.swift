@@ -15,12 +15,12 @@ struct SearchPodcastsState: Equatable {
     var searchText: String
     var podcasts: [Podcast]
 
-    var selection: Identified<Int, FetchAndDisplayPodcastState?>?
+    var selection: Identified<Int, DisplayPodcastState?>?
     var alertState: AlertState<SearchPodcastsAction>?
 }
 
 enum SearchPodcastsAction: Equatable {
-    case fetchAndDisplayPodcast(FetchAndDisplayPodcastAction)
+    case fetchAndDisplayPodcast(DisplayPodcastAction)
 
     case search
     case searchTextChanged(String)
@@ -39,14 +39,14 @@ struct SearchPodcastsEnvironment {
 }
 
 let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, SearchPodcastsEnvironment>.combine(
-    fetchAndDisplayPodcastReducer.optional()
+    displayPodcastReducer.optional()
         .pullback(state: \Identified.value, action: .self, environment: { $0 })
         .optional()
         .pullback(
         state: \.selection,
         action: /SearchPodcastsAction.fetchAndDisplayPodcast,
         environment: {
-            FetchAndDisplayPodcastEnvironment(
+            DisplayPodcastEnvironment(
                 mainQueue: $0.mainQueue,
                 favoritedPodcastDataStore: $0.favoritedPodcastDataStore,
                 fetchWorkflow: FetchPodcastWorkflow(networking: $0.networking),
@@ -146,7 +146,7 @@ struct SearchPodcastsView: View {
                                     state: { $0.selection?.value },
                                     action: SearchPodcastsAction.fetchAndDisplayPodcast
                                 ),
-                                then: FetchAndDisplayPodcastView.init(store:)
+                                then: DisplayPodcastView.init(store:)
                             ),
                             tag: offset,
                             selection: viewStore.binding(

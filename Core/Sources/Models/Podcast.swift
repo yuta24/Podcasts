@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct Podcast: Equatable, Decodable {
+public struct Podcast: Equatable, Codable {
     public var trackName: String?
     public var artistName: String?
     public var artworkUrl600: String?
     public var trackCount: Int?
-    public var feedUrl: String?
+    public var feedUrl: URL?
     public var releaseDate: Date?
 
     public init(
@@ -20,7 +20,7 @@ public struct Podcast: Equatable, Decodable {
         artistName: String?,
         artworkUrl600: String?,
         trackCount: Int?,
-        feedUrl: String?,
+        feedUrl: URL?,
         releaseDate: Date?
     ) {
         self.trackName = trackName

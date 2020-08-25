@@ -16,12 +16,10 @@ struct FavoritePodcastWorkflow {
         self.dataStore = dataStore
     }
 
-    func execute(_ podcast: PodcastExt) -> AnyPublisher<PodcastExt, Never> {
-        Just(mutate(podcast) {
-            $0.isFavorited = true
-        })
-        .handleEvents(receiveOutput: { value in
-            dataStore.append(value)
+    func execute(_ podcast: Podcast) -> AnyPublisher<Void, Never> {
+        Just(())
+        .handleEvents(receiveOutput: { _ in
+            dataStore.append(podcast)
         })
         .eraseToAnyPublisher()
     }
