@@ -26,7 +26,7 @@ extension Component {
             var imageUrl: URL? {
                 switch self {
                 case .podcast(let value):
-                    return value.artworkUrl600.flatMap(URL.init(string:))
+                    return value.artworkUrl600
                 case .podcastExt(let value):
                     return value.imageUrl
                 }

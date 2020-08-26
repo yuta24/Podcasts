@@ -18,31 +18,35 @@ public struct PlayingEpisodeDataStore {
 }
 
 private let logger = Logger(subsystem: "com.bivre.podcasts", category: "PlayingEpisodeDataStore")
-private let db = try! SQLConnection(location: .disk(url: FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bivre.podcast")!.appendingPathComponent("playingepisode")))
 
 extension PlayingEpisodeDataStore {
-    enum Constant {
-        static let tableName = "playing_episodes"
+    static let reset: () -> Void = {
+        try! Database.connection.execute("""
+            DELETE FROM \(Database.Table.playingEpisode.name)
+        """)
+        try! Database.connection.execute("""
+            VACUUM
+        """)
     }
 
     public static let live: PlayingEpisodeDataStore = {
-        try! db.execute("""
-        CREATE IF NOT EXISTS TABLE \(Constant.tableName)
-        (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            title VARCHAR NOT NULL,
-            position REAL NOT NULL,
-            duration REAL NOT NULL,
-            enclosure VARCHAR NOT NULL,
-            created REAL NOT NULL
-        )
+        try! Database.connection.execute("""
+            CREATE TABLE IF NOT EXISTS \(Database.Table.playingEpisode.name)
+            (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                title VARCHAR NOT NULL,
+                position REAL NOT NULL,
+                duration REAL NOT NULL,
+                enclosure VARCHAR NOT NULL,
+                created REAL NOT NULL
+            )
         """)
 
         return PlayingEpisodeDataStore(
             fetchs: {
                 Deferred {
                     Future<[PlayingEpisode], Never> { promise in
-                        let episodes = try! db.prepare("SELECT title, position, duration, enclosure, created FROM \(Constant.tableName) ORDER BY created DESC")
+                        let episodes = try! Database.connection.prepare("SELECT title, position, duration, enclosure, created FROM \(Database.Table.playingEpisode.name) ORDER BY created DESC")
                             .rows(PlayingEpisode.self)
                         promise(.success(episodes))
                     }
@@ -52,8 +56,8 @@ extension PlayingEpisodeDataStore {
             last: {
                 Deferred {
                     Future<PlayingEpisode?, Never> { promise in
-                        let lastRowId = db.lastInsertRowID
-                        let episode = try! db.prepare("SELECT title, position, duration, enclosure, created FROM \(Constant.tableName) WHERE id = ?")
+                        let lastRowId = Database.connection.lastInsertRowID
+                        let episode = try! Database.connection.prepare("SELECT title, position, duration, enclosure, created FROM \(Database.Table.playingEpisode.name) WHERE id = ?")
                             .bind(lastRowId)
                             .row(PlayingEpisode.self)
                         promise(.success(episode))
@@ -62,12 +66,12 @@ extension PlayingEpisodeDataStore {
                 .eraseToAnyPublisher()
             },
             append: { episode in
-                _ = try! db.prepare("INSERT INTO \(Constant.tableName) (title, position, duration, enclosure, created) VALUES (?, ?, ?, ?, ?)")
+                _ = try! Database.connection.prepare("INSERT INTO \(Database.Table.playingEpisode.name) (title, position, duration, enclosure, created) VALUES (?, ?, ?, ?, ?)")
                     .bind(episode.title, episode.position, episode.duration, episode.enclosure, episode.created)
                     .execute()
             },
             remove: { episode in
-                _ = try! db.prepare("DELETE FROM \(Constant.tableName) WHERE title = ? AND enclosure = ?")
+                _ = try! Database.connection.prepare("DELETE FROM \(Database.Table.playingEpisode.name) WHERE title = ? AND enclosure = ?")
                     .bind(episode.title, episode.enclosure)
                     .execute()
             }

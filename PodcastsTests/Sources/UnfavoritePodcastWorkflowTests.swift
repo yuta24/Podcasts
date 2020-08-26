@@ -36,15 +36,13 @@ class UnfavoritePodcastWorkflowTests: XCTestCase {
 
         let exp = expectation(description: "\(#function):\(#line)")
 
-        let podcast: PodcastExt = .init(
-            title: "Title",
-            desc: "Description",
-            link: URL(string: "https://www.google.com/")!,
-            author: "yuta24",
-            imageUrl: .none,
-            summary: "Summary",
-            episodes: [],
-            isFavorited: true
+        let podcast: Podcast = .init(
+            trackName: "TrackName",
+            artistName: "ArtistName",
+            artworkUrl600: .none,
+            trackCount: 10,
+            feedUrl: .none,
+            releaseDate: .none
         )
 
         // When

@@ -7,6 +7,7 @@
 
 import Combine
 import XCTest
+import Core
 @testable import Podcasts
 
 class SearchPodcastsWorkflowTests: XCTestCase {
@@ -75,8 +76,9 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                                     artistName: "Swift0",
                                     artworkUrl600: .none,
                                     trackCount: 123,
-                                    feedUrl: .none
-                                    )
+                                    feedUrl: .none,
+                                    releaseDate: .none
+                                )
                             ]
                         )
                     )
@@ -98,7 +100,8 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                     artistName: "Swift0",
                     artworkUrl600: .none,
                     trackCount: 123,
-                    feedUrl: .none
+                    feedUrl: .none,
+                    releaseDate: .none
                 )
             ]
         )

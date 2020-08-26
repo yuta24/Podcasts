@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftSQL
+import SwiftSQLExt
 
 public struct Podcast: Equatable, Codable {
     public var trackName: String?
     public var artistName: String?
-    public var artworkUrl600: String?
+    public var artworkUrl600: URL?
     public var trackCount: Int?
     public var feedUrl: URL?
     public var releaseDate: Date?
@@ -18,7 +20,7 @@ public struct Podcast: Equatable, Codable {
     public init(
         trackName: String?,
         artistName: String?,
-        artworkUrl600: String?,
+        artworkUrl600: URL?,
         trackCount: Int?,
         feedUrl: URL?,
         releaseDate: Date?
@@ -29,5 +31,16 @@ public struct Podcast: Equatable, Codable {
         self.trackCount = trackCount
         self.feedUrl = feedUrl
         self.releaseDate = releaseDate
+    }
+}
+
+extension Podcast: SQLRowDecodable {
+    public init(row: SQLRow) throws {
+        self.trackName = row[0]
+        self.artistName = row[1]
+        self.artworkUrl600 = row[2]
+        self.trackCount = row[3]
+        self.feedUrl = row[4]
+        self.releaseDate = row[5]
     }
 }

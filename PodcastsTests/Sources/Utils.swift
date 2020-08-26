@@ -19,7 +19,7 @@ class FavoritedPodcastDataStoreSpy {
     private(set) var removeCallCount = 0
     private(set) var changedCallCount = 0
 
-    init(fetchs: @escaping () -> AnyPublisher<[PodcastExt], Never>, fetch: @escaping () -> AnyPublisher<PodcastExt?, Never>, changed: @escaping () -> AnyPublisher<[PodcastExt], Never>) {
+    init(fetchs: @escaping () -> AnyPublisher<[Podcast], Never>, fetch: @escaping () -> AnyPublisher<Podcast?, Never>, changed: @escaping () -> AnyPublisher<[Podcast], Never>) {
         self.dataStore = FavoritedPodcastDataStore(
             fetchs: { [weak self] in
                 self?.fetchsCallCount += 1

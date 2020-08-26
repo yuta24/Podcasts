@@ -33,61 +33,79 @@ public struct FavoritedPodcastDataStore {
 }
 
 private let logger = Logger(subsystem: "com.bivre.podcasts", category: "FavoritedPodcastDataStore")
-private let encoder = JSONEncoder()
-private let decoder = JSONDecoder()
-private let userDefaults = UserDefaults(suiteName: "group.com.bivre.podcast")!
-
-private extension UserDefaults {
-    @objc dynamic var favorites: Data {
-        data(forKey: "favorites") ?? Data()
-    }
-}
+private let subject = CurrentValueSubject<[Podcast], Never>([])
 
 extension FavoritedPodcastDataStore {
-    public static let live = FavoritedPodcastDataStore(
-        fetchs: {
-            Just(userDefaults.favorites)
-                .map {
-                    try? decoder.decode([Podcast].self, from: $0)
+    static let reset: () -> Void = {
+        try! Database.connection.execute("""
+            DELETE FROM \(Database.Table.favoritePodcast.name)
+        """)
+        try! Database.connection.execute("""
+            VACUUM
+        """)
+    }
+
+    static func published() {
+        let podcasts = try! Database.connection.prepare("SELECT track_name, artist_name, artwork_url_600, track_count, feed_url, release_date FROM \(Database.Table.favoritePodcast.name) ORDER BY created DESC")
+            .rows(Podcast.self)
+
+        subject.send(podcasts)
+    }
+
+    public static let live: FavoritedPodcastDataStore = {
+        try! Database.connection.execute("""
+            CREATE TABLE IF NOT EXISTS \(Database.Table.favoritePodcast.name)
+            (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                track_name VARCHAR,
+                artist_name VARCHAR,
+                artwork_url_600 VARCHAR,
+                track_count INTEGER,
+                feed_url VARCHAR,
+                release_date REAL,
+                created REAL NOT NULL
+            )
+        """)
+
+        return FavoritedPodcastDataStore(
+            fetchs: {
+                Deferred {
+                    Future<[Podcast], Never> { promise in
+                        let podcasts = try! Database.connection.prepare("SELECT track_name, artist_name, artwork_url_600, track_count, feed_url, release_date FROM \(Database.Table.favoritePodcast.name) ORDER BY created DESC")
+                            .rows(Podcast.self)
+                        promise(.success(podcasts))
+                    }
                 }
-                .map { $0 ?? [] }
                 .eraseToAnyPublisher()
-        },
-        fetch: { feedUrl in
-            Just(())
-                .map { _ -> Podcast? in
-                    let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
-                    return array?.first(where: { $0.feedUrl == feedUrl })
+            },
+            fetch: { feedUrl in
+                Deferred {
+                    Future<Podcast?, Never> { promise in
+                        let podcast = try! Database.connection.prepare("SELECT track_name, artist_name, artwork_url_600, track_count, feed_url, release_date FROM \(Database.Table.favoritePodcast.name) WHERE feed_url = ?")
+                            .bind(feedUrl.absoluteString)
+                            .row(Podcast.self)
+                        promise(.success(podcast))
+                    }
                 }
                 .eraseToAnyPublisher()
-        },
-        append: { podcast in
-            let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
-            let new = mutate(array ?? []) {
-                $0.append(podcast)
+            },
+            append: { podcast in
+                _ = try! Database.connection.prepare("INSERT INTO \(Database.Table.favoritePodcast.name) (track_name, artist_name, artwork_url_600, track_count, feed_url, release_date, created) VALUES (?, ?, ?, ?, ?, ?, ?)")
+                    .bind(podcast.trackName!, podcast.artistName!, podcast.artworkUrl600!.absoluteString, podcast.trackCount!, podcast.feedUrl!.absoluteString, podcast.releaseDate!.timeIntervalSince1970, Date().timeIntervalSince1970)
+                    .execute()
+
+                published()
+            },
+            remove: { podcast in
+                _ = try! Database.connection.prepare("DELETE FROM \(Database.Table.favoritePodcast.name) WHERE feed_url = ?")
+                    .bind(podcast.feedUrl!.absoluteURL)
+                    .execute()
+            },
+            changed: {
+                // FIXME:
+                defer { published() }
+                return subject.eraseToAnyPublisher()
             }
-            let data = try! encoder.encode(new)
-            userDefaults.setValue(data, forKey: "favorites")
-        },
-        remove: { podcast in
-            let array = try? decoder.decode([Podcast].self, from: userDefaults.favorites)
-            let new = mutate(array ?? []) {
-                $0.removeAll(where: { $0.feedUrl == podcast.feedUrl })
-            }
-            let data = try! encoder.encode(new)
-            userDefaults.setValue(data, forKey: "favorites")
-        },
-        changed: {
-            userDefaults.publisher(for: \.favorites)
-                .setFailureType(to: Never.self)
-                .eraseToAnyPublisher()
-                .eraseToAnyPublisher()
-                .map {
-                    try? decoder.decode([Podcast].self, from: $0)
-                }
-                .map { $0 ?? [] }
-                .eraseToAnyPublisher()
-                .eraseToAnyPublisher()
-        }
-    )
+        )
+    }()
 }

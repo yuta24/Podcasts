@@ -16,12 +16,12 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        UserDefaults(suiteName: "group.com.bivre.podcast")!.removeObject(forKey: "favorites")
+        FavoritedPodcastDataStore.reset()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        UserDefaults(suiteName: "group.com.bivre.podcast")!.removeObject(forKey: "favorites")
+        FavoritedPodcastDataStore.reset()
     }
 
     func test_Changed() throws {
@@ -31,39 +31,33 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
         let exp = expectation(description: "\(#function):\(#line)")
         exp.isInverted = true
 
-        let expects1: [PodcastExt] = [
+        let expects1: [Podcast] = [
             .init(
-                title: "Title1",
-                desc: "Description",
-                link: URL(string: "https://www.google.com/")!,
-                author: "yuta24",
-                imageUrl: .none,
-                summary: "Summary",
-                episodes: [],
-                isFavorited: true
+                trackName: "TrackName1",
+                artistName: "ArtistName",
+                artworkUrl600: URL(string: "https://www.google.com/")!,
+                trackCount: 10,
+                feedUrl: URL(string: "https://www.google.com/")!,
+                releaseDate: Date(timeIntervalSince1970: 123)
             )
         ]
 
-        let expects2: [PodcastExt] = [
+        let expects2: [Podcast] = [
             .init(
-                title: "Title1",
-                desc: "Description",
-                link: URL(string: "https://www.google.com/")!,
-                author: "yuta24",
-                imageUrl: .none,
-                summary: "Summary",
-                episodes: [],
-                isFavorited: true
+                trackName: "TrackName2",
+                artistName: "ArtistName",
+                artworkUrl600: URL(string: "https://www.google.com/")!,
+                trackCount: 10,
+                feedUrl: URL(string: "https://www.google.com/")!,
+                releaseDate: Date(timeIntervalSince1970: 1234)
             ),
             .init(
-                title: "Title2",
-                desc: "Description",
-                link: URL(string: "https://www.google.com/")!,
-                author: "yuta24",
-                imageUrl: .none,
-                summary: "Summary",
-                episodes: [],
-                isFavorited: true
+                trackName: "TrackName1",
+                artistName: "ArtistName",
+                artworkUrl600: URL(string: "https://www.google.com/")!,
+                trackCount: 10,
+                feedUrl: URL(string: "https://www.google.com/")!,
+                releaseDate: Date(timeIntervalSince1970: 123)
             )
         ]
 
@@ -85,25 +79,21 @@ class FavoritedPodcastDataStoreTests: XCTestCase {
             .store(in: &cancellables)
 
         store.append(.init(
-            title: "Title1",
-            desc: "Description",
-            link: URL(string: "https://www.google.com/")!,
-            author: "yuta24",
-            imageUrl: .none,
-            summary: "Summary",
-            episodes: [],
-            isFavorited: true
+            trackName: "TrackName1",
+            artistName: "ArtistName",
+            artworkUrl600: URL(string: "https://www.google.com/")!,
+            trackCount: 10,
+            feedUrl: URL(string: "https://www.google.com/")!,
+            releaseDate: Date(timeIntervalSince1970: 123)
         ))
 
         store.append(.init(
-            title: "Title2",
-            desc: "Description",
-            link: URL(string: "https://www.google.com/")!,
-            author: "yuta24",
-            imageUrl: .none,
-            summary: "Summary",
-            episodes: [],
-            isFavorited: true
+            trackName: "TrackName2",
+            artistName: "ArtistName",
+            artworkUrl600: URL(string: "https://www.google.com/")!,
+            trackCount: 10,
+            feedUrl: URL(string: "https://www.google.com/")!,
+            releaseDate: Date(timeIntervalSince1970: 1234)
         ))
 
         // Then
