@@ -125,6 +125,8 @@ struct PodcastsApp: App {
         )
     )
 
+    @UIApplicationDelegateAdaptor(ApplicationDelegateAdaptor.self) private var delegate
+
     var body: some Scene {
         WindowGroup {
             WithViewStore(store) { viewStore in
