@@ -14,6 +14,7 @@ extension Component {
         let podcast: PodcastExt
         let onFavorite: () -> Void
         let onUnfavorite: () -> Void
+        let onEpisode: (Episode) -> Void
 
         var body: some View {
             ScrollView {
@@ -76,6 +77,9 @@ extension Component {
                                 .foregroundColor(Color(.secondaryLabel))
                         }
                         .padding([.top, .bottom], 4)
+                        .onTapGesture {
+                            onEpisode(episode)
+                        }
                     }
                 }
                 .padding([.leading, .trailing])
@@ -128,7 +132,8 @@ struct ComponentPodcastExtView_Previews: PreviewProvider {
                             isFavorited: true
                         ),
                         onFavorite: {},
-                        onUnfavorite: {}
+                        onUnfavorite: {},
+                        onEpisode: { _ in }
                     )
                     .environment(\.colorScheme, colorScheme)
                 }

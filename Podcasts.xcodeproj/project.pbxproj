@@ -41,6 +41,7 @@
 		2B7EB4BD24F545A4004CF488 /* PlayingEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */; };
 		2B7EB4C024F54C99004CF488 /* SQLDataType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */; };
 		2B7EB4C124F54F96004CF488 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B424EA0F6400D48B20 /* Podcast.swift */; };
+		2B8A442E24F6A0A3008D6F3E /* PlayingEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A442D24F6A0A3008D6F3E /* PlayingEpisodeView.swift */; };
 		2BADBA7D24F5667000D78586 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211D24F15ADD00043684 /* Tuples.swift */; };
 		2BADBA8024F56F6800D78586 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BADBA7F24F56F6800D78586 /* Database.swift */; };
 		2BDEC9F424F3260E0079F839 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDEC9EB24F3260E0079F839 /* Core.framework */; };
@@ -196,6 +197,7 @@
 		2B7EB4AE24F53FBB004CF488 /* PlayingEpisodeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisodeDataStore.swift; sourceTree = "<group>"; };
 		2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisode.swift; sourceTree = "<group>"; };
 		2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLDataType+Extension.swift"; sourceTree = "<group>"; };
+		2B8A442D24F6A0A3008D6F3E /* PlayingEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisodeView.swift; sourceTree = "<group>"; };
 		2BADBA7F24F56F6800D78586 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		2BDEC9EB24F3260E0079F839 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDEC9ED24F3260E0079F839 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				2B79211F24F206CB00043684 /* Components */,
 				2BADBA7E24F56BD400D78586 /* DisplayPodcast */,
 				2B400B9A24F276DC00F0AE32 /* Favorite */,
+				2B8A442C24F6A07F008D6F3E /* PlayingEpisode */,
 				2B400B9724F2734B00F0AE32 /* Search */,
 			);
 			path = Features;
@@ -454,6 +457,14 @@
 				2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */,
 			);
 			path = SwiftSQL;
+			sourceTree = "<group>";
+		};
+		2B8A442C24F6A07F008D6F3E /* PlayingEpisode */ = {
+			isa = PBXGroup;
+			children = (
+				2B8A442D24F6A0A3008D6F3E /* PlayingEpisodeView.swift */,
+			);
+			path = PlayingEpisode;
 			sourceTree = "<group>";
 		};
 		2BADBA7E24F56BD400D78586 /* DisplayPodcast */ = {
@@ -779,6 +790,7 @@
 				2B79212124F206D900043684 /* PodcastItemView.swift in Sources */,
 				2B79210B24EFFC1F00043684 /* FavoritePodcastWorkflow.swift in Sources */,
 				2BDECA1B24F328560079F839 /* PodcastExt+Extension.swift in Sources */,
+				2B8A442E24F6A0A3008D6F3E /* PlayingEpisodeView.swift in Sources */,
 				2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */,
 				2B7BB6BE24EA27B300D48B20 /* SearchPodcastResult.swift in Sources */,
 				2B05896624E974B800D42170 /* FavoritePodcastsView.swift in Sources */,

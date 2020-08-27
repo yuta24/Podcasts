@@ -27,6 +27,7 @@ enum DisplayPodcastAction: Equatable {
     case favoriteResponse(Result<Void, Never>)
     case unfavorite
     case unfavoriteResponse(Result<Void, Never>)
+    case select(Episode)
 
     case alertDismissed
 
@@ -119,6 +120,10 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
 
             return .none
 
+        case .select:
+
+            return .none
+
         case .alertDismissed:
             state.alertState = .none
 
@@ -142,6 +147,9 @@ struct DisplayPodcastView: View {
                     },
                     onUnfavorite: {
                         viewStore.send(.unfavorite)
+                    },
+                    onEpisode: { episode in
+                        viewStore.send(.select(episode))
                     }
                 )
             } else {

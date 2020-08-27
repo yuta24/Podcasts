@@ -11,16 +11,22 @@ import Core
 
 struct AppState: Equatable {
     var selected: Int
+    var isSheetPresented: Bool
 
     var searchPodcastsState: SearchPodcastsState
     var favoritePodcastsState: FavoritePodcastsState
+    var playingEpisodeState: PlayingEpisodeState?
 }
 
 enum AppAction: Equatable {
     case tabSelected(Int)
 
+    case setSheet(isPresented: Bool)
+    case setSheetIsPresentedDelayCompleted
+
     case searchPodcasts(SearchPodcastsAction)
     case favoritePodcasts(FavoritePodcastsAction)
+    case playingEpisode(PlayingEpisodeAction)
 }
 
 struct AppEnvironment {
@@ -62,11 +68,38 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
 
             return .none
 
+        case .setSheet(true):
+            state.isSheetPresented = true
+            return Effect(value: .setSheetIsPresentedDelayCompleted)
+               .delay(for: 1, scheduler: environment.mainQueue)
+               .eraseToEffect()
+
+        case .setSheet(false):
+            state.isSheetPresented = false
+            state.playingEpisodeState = .none
+
+            return .none
+
+        case .setSheetIsPresentedDelayCompleted:
+            state.playingEpisodeState = .init()
+
+            return .none
+
+        case .searchPodcasts(.fetchAndDisplayPodcast(.select(let episode))):
+            return .init(value: .setSheet(isPresented: true))
+
         case .searchPodcasts:
 
             return .none
 
+        case .favoritePodcasts(.displayPodcast(.select(let episode))):
+            return .init(value: .setSheet(isPresented: true))
+
         case .favoritePodcasts:
+
+            return .none
+
+        case .playingEpisode:
 
             return .none
 
@@ -80,6 +113,7 @@ struct PodcastsApp: App {
     let store = Store<AppState, AppAction>(
         initialState: .init(
             selected: 0,
+            isSheetPresented: false,
             searchPodcastsState: .init(searchText: "", podcasts: []),
             favoritePodcastsState: .init(podcasts: [])
         ),
@@ -108,6 +142,13 @@ struct PodcastsApp: App {
                             Text("Favorite")
                         }
                         .tag(1)
+                }
+                .sheet(isPresented: viewStore.binding(get: { $0.isSheetPresented }, send: AppAction.setSheet(isPresented:))) {
+                    IfLetStore(
+                        store.scope(
+                            state: { $0.playingEpisodeState }, action: AppAction.playingEpisode),
+                        then: PlayingEpisodeView.init(store:)
+                    )
                 }
             }
         }
