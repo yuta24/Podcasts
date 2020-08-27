@@ -12,9 +12,12 @@ import FetchImage
 import Core
 
 struct PlayingEpisodeState: Equatable {
+    var episode: PlayingEpisode
 }
 
 enum PlayingEpisodeAction: Equatable {
+    case resume
+    case stop
 }
 
 struct PlayingEpisodeEnvironment {
@@ -33,7 +36,8 @@ struct PlayingEpisodeView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            Rectangle()
+            Text("\(viewStore.episode.title)")
+                .font(.title)
         }
     }
 }

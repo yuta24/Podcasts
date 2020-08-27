@@ -11,11 +11,11 @@ import Core
 
 struct AppState: Equatable {
     var selected: Int
-    var isSheetPresented: Bool
-
     var searchPodcastsState: SearchPodcastsState
     var favoritePodcastsState: FavoritePodcastsState
     var playingEpisodeState: PlayingEpisodeState?
+
+    var isSheetPresented: Bool { playingEpisodeState != nil }
 }
 
 enum AppAction: Equatable {
@@ -69,31 +69,44 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             return .none
 
         case .setSheet(true):
-            state.isSheetPresented = true
             return Effect(value: .setSheetIsPresentedDelayCompleted)
                .delay(for: 1, scheduler: environment.mainQueue)
                .eraseToEffect()
 
         case .setSheet(false):
-            state.isSheetPresented = false
             state.playingEpisodeState = .none
 
             return .none
 
         case .setSheetIsPresentedDelayCompleted:
-            state.playingEpisodeState = .init()
 
             return .none
 
         case .searchPodcasts(.fetchAndDisplayPodcast(.select(let episode))):
-            return .init(value: .setSheet(isPresented: true))
+            state.playingEpisodeState = .init(
+                episode: .init(
+                    title: episode.title!,
+                    position: 0,
+                    duration: episode.duration!,
+                    enclosure: episode.enclosure!
+                )
+            )
+            return .none
 
         case .searchPodcasts:
 
             return .none
 
         case .favoritePodcasts(.displayPodcast(.select(let episode))):
-            return .init(value: .setSheet(isPresented: true))
+            state.playingEpisodeState = .init(
+                episode: .init(
+                    title: episode.title!,
+                    position: 0,
+                    duration: episode.duration!,
+                    enclosure: episode.enclosure!
+                )
+            )
+            return .none
 
         case .favoritePodcasts:
 
@@ -113,7 +126,6 @@ struct PodcastsApp: App {
     let store = Store<AppState, AppAction>(
         initialState: .init(
             selected: 0,
-            isSheetPresented: false,
             searchPodcastsState: .init(searchText: "", podcasts: []),
             favoritePodcastsState: .init(podcasts: [])
         ),
