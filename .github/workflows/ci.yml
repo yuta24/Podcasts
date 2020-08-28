@@ -16,5 +16,11 @@ jobs:
       with:
         xcode-version: 12.0
     - uses: actions/checkout@v2
-    - name: Build
-      run: xcodebuild -workspace Podcasts.xcworkspace -scheme Podcasts
+    - name: Decrypt
+      run: ./scripts/decrypt.sh
+      env:
+        SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
+    - name: Bootstrap
+      run: ./scripts/bootstrap.sh
+    - name: Run test
+      run: ./scripts/test.sh
