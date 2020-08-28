@@ -15,6 +15,18 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1.1
       with:
         xcode-version: 12.0
+    - uses: actions/cache@v2
+      with:
+        path: Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+    - uses: actions/cache@v2
+      with:
+        path: Podcasts.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
     - uses: actions/checkout@v2
     - name: Decrypt
       run: ./scripts/decrypt.sh
