@@ -22,10 +22,10 @@ jobs:
           ${{ runner.os }}-pods-
     - uses: actions/cache@v2
       with:
-        path: Podcasts.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-spm-
+          ${{ runner.os }}-gems-
     - name: Decrypt
       run: ./scripts/decrypt.sh
       env:
