@@ -26,6 +26,11 @@ fastlane ios fetch_certificates
 fastlane ios run_auto_tests
 ```
 自動テストの実行
+### ios publish_ipa
+```
+fastlane ios publish_ipa
+```
+IPAのリリース
 
 ----
 

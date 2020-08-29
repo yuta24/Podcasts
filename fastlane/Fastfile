@@ -27,4 +27,22 @@ platform :ios do
       devices: ["iPhone 11 Pro"]
     )
   end
+
+  desc "IPAのリリース"
+  lane :publish_ipa do
+    increment_build_number(
+      build_number: 1
+    )
+
+    increment_version_number(
+      version_number: "0.1.0",
+      xcodeproj: "Podcasts.xcodeproj"
+    )
+
+    build_ios_app(
+      configuration: "Release",
+      export_method: "app-store",
+      export_xcargs: "-allowProvisioningUpdates"
+    )
+  end
 end
