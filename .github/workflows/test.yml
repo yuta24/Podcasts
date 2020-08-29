@@ -40,6 +40,12 @@ jobs:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
     - name: Bootstrap
       run: ./scripts/bootstrap.sh
+    - name: Setup Certificates
+      run: bundle exec fastlane ios fetch_certificates
+      env:
+        MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
+        MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
     - name: Run test
       run: ./scripts/test.sh
     - name: Slack Notification
