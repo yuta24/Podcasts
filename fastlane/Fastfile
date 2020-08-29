@@ -18,4 +18,13 @@ platform :ios do
     sync_code_signing(type: "adhoc")
     sync_code_signing(type: "appstore")
   end
+
+  desc "自動テストの実行"
+  lane :run_auto_tests do
+    run_tests(
+      workspace: "Podcasts.xcworkspace",
+      scheme: "Podcasts",
+      devices: ["iPhone 11 Pro"]
+    )
+  end
 end

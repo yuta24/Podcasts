@@ -47,7 +47,7 @@ jobs:
         MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
     - name: Run test
-      run: ./scripts/test.sh
+      run: bundle exec fastlane ios run_auto_tests
     - name: Slack Notification
       uses: tokorom/action-slack-incoming-webhook@master
       if: success()

@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios fetch_certificates
 ```
 証明書＆プロビジョニングプロファイルの取得
+### ios run_auto_tests
+```
+fastlane ios run_auto_tests
+```
+自動テストの実行
 
 ----
 
