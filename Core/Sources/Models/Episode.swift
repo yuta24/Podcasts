@@ -14,6 +14,7 @@ public struct Episode: Equatable, Codable {
     public var link: URL?
     public var subtitle: String?
     public var duration: TimeInterval?
+    public var imageUrl: URL?
     public var enclosure: URL?
 
     public init(
@@ -23,6 +24,7 @@ public struct Episode: Equatable, Codable {
         link: URL?,
         subtitle: String?,
         duration: TimeInterval?,
+        imageUrl: URL?,
         enclosure: URL?
     ) {
         self.title = title
@@ -31,6 +33,7 @@ public struct Episode: Equatable, Codable {
         self.link = link
         self.subtitle = subtitle
         self.duration = duration
+        self.imageUrl = imageUrl
         self.enclosure = enclosure
     }
 }

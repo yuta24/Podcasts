@@ -37,6 +37,7 @@ extension PlayingEpisodeDataStore {
                 title VARCHAR NOT NULL,
                 position REAL NOT NULL,
                 duration REAL NOT NULL,
+                imageUrl VARCHAR NOT NULL,
                 enclosure VARCHAR NOT NULL,
                 created REAL NOT NULL
             )

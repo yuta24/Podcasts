@@ -88,6 +88,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     title: episode.title!,
                     position: 0,
                     duration: episode.duration!,
+                    imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!
                 )
             )
@@ -103,6 +104,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     title: episode.title!,
                     position: 0,
                     duration: episode.duration!,
+                    imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!
                 )
             )

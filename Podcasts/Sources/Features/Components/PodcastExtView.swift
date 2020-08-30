@@ -126,6 +126,7 @@ struct ComponentPodcastExtView_Previews: PreviewProvider {
                                     link: URL(string: "https://www.swiftbysundell.com/podcast/79")!,
                                     subtitle: "Ben Scheirman, creator of NSScreencast, joins John on an episode all about UICollectionView. How have UICollectionView’s features evolved over time, and how are modern APIs like compositional layouts and diffable data sources changing the way collection views are built and used?",
                                     duration: 4107,
+                                    imageUrl: URL(string: "https://www.swiftbysundell.com/images/podcastArtwork.png")!,
                                     enclosure: URL(string: "https://traffic.libsyn.com/swiftbysundell/SwiftBySundell79.mp3")!
                                 ),
                             ],

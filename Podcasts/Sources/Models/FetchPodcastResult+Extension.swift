@@ -17,6 +17,6 @@ extension FetchPodcastResult {
         self.author = rss.iTunes?.iTunesAuthor
         self.imageUrl = rss.iTunes?.iTunesImage?.attributes?.href.flatMap(URL.init(string:))
         self.summary = rss.iTunes?.iTunesSummary
-        self.episodes = rss.items?.compactMap(Episode.init) ?? []
+        self.episodes = rss.items?.compactMap { Episode($0, on: rss) } ?? []
     }
 }

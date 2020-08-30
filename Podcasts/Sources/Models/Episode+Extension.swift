@@ -10,15 +10,17 @@ import FeedKit
 import Core
 
 extension Episode {
-    init(_ feed: RSSFeedItem) {
+    init(_ item: RSSFeedItem, on rss: RSSFeed) {
+        let imageUrl = rss.iTunes?.iTunesImage?.attributes?.href.flatMap(URL.init(string:))
         self.init(
-            title: feed.title,
-            desc: feed.description,
-            pubDate: feed.pubDate,
-            link: feed.link.flatMap(URL.init(string:)),
-            subtitle: feed.iTunes?.iTunesSubtitle,
-            duration: feed.iTunes?.iTunesDuration,
-            enclosure: feed.enclosure?.attributes?.url.flatMap(URL.init(string:)
+            title: item.title,
+            desc: item.description,
+            pubDate: item.pubDate,
+            link: item.link.flatMap(URL.init(string:)),
+            subtitle: item.iTunes?.iTunesSubtitle,
+            duration: item.iTunes?.iTunesDuration,
+            imageUrl: item.iTunes?.iTunesImage?.attributes?.href.flatMap(URL.init(string:)) ?? imageUrl,
+            enclosure: item.enclosure?.attributes?.url.flatMap(URL.init(string:)
             )
         )
     }
