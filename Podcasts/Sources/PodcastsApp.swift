@@ -59,6 +59,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             )
         }
     ),
+    playingEpisodeReducer.optional()
+        .pullback(
+            state: \.playingEpisodeState,
+            action: /AppAction.playingEpisode,
+            environment: { _ in
+                PlayingEpisodeEnvironment()
+            }
+        ),
     .init { state, action, environment in
 
         switch action {
@@ -90,8 +98,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     duration: episode.duration!,
                     imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!
-                )
+                ),
+                playing: false
             )
+
             return .none
 
         case .searchPodcasts:
@@ -106,8 +116,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     duration: episode.duration!,
                     imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!
-                )
+                ),
+                playing: false
             )
+
             return .none
 
         case .favoritePodcasts:

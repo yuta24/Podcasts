@@ -13,11 +13,12 @@ import Core
 
 struct PlayingEpisodeState: Equatable {
     var episode: PlayingEpisode
+    var playing: Bool
 }
 
 enum PlayingEpisodeAction: Equatable {
     case resume
-    case stop
+    case pause
 }
 
 struct PlayingEpisodeEnvironment {
@@ -26,7 +27,19 @@ struct PlayingEpisodeEnvironment {
 let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, PlayingEpisodeEnvironment>.combine(
     .init { state, action, environment in
 
-        return .none
+        switch action {
+
+        case .resume:
+            state.playing = true
+
+            return .none
+
+        case .pause:
+            state.playing = false
+
+            return .none
+
+        }
 
     }
 )
@@ -39,40 +52,37 @@ struct PlayingEpisodeView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: 32) {
                     ImageView(image: .init(url: viewStore.episode.imageUrl))
-                        .frame(width: 180, height: 180)
-
-                    VStack {
-                        GeometryReader { proxy in
-                            ZStack {
-                                Rectangle().frame(width: proxy.size.width, height: 2)
-
-                                Circle().frame(width: 4, height: 4)
-                            }
-                        }
-
-                        HStack {
-                            Text("\(position)")
-                                .font(.caption)
-
-                            Spacer()
-
-                            Text("\(Int(viewStore.episode.duration) - position)")
-                                .font(.caption)
-                        }
-                    }
-
-//                    Slider(
-//                        value: $position,
-//                        in: 0...Float(viewStore.episode.duration),
-//                        minimumValueLabel: Text("0"),
-//                        maximumValueLabel: Text("\(viewStore.episode.duration)"),
-//                        label: { Text("Seeker") })
+                        .frame(width: 240, height: 240)
+                        .cornerRadius(8)
 
                     Text("\(viewStore.episode.title)")
                         .font(.title2)
                         .bold()
+
+                    HStack {
+                        Button(
+                            action: {
+                                if viewStore.playing {
+                                    viewStore.send(.pause)
+                                } else {
+                                    viewStore.send(.resume)
+                                }
+                            },
+                            label: {
+                                if viewStore.playing {
+                                    Image(systemName: "pause.fill")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                } else {
+                                    Image(systemName: "play.fill")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                }
+                            }
+                        )
+                    }
                 }
                 .padding()
             }

@@ -49,7 +49,6 @@
 		2B8A444E24F7E4D4008D6F3E /* PodcastsClipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A444D24F7E4D4008D6F3E /* PodcastsClipsTests.swift */; };
 		2B8A445924F7E4D4008D6F3E /* PodcastsClipsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A445824F7E4D4008D6F3E /* PodcastsClipsUITests.swift */; };
 		2B8A445D24F7E4D4008D6F3E /* PodcastsClips.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 2B8A443824F7E4D1008D6F3E /* PodcastsClips.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		2B8A446A24FB4E55008D6F3E /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A446924FB4E55008D6F3E /* Seeker.swift */; };
 		2B8A447424FB5715008D6F3E /* UI.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8A447224FB5715008D6F3E /* UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B8A447724FB5715008D6F3E /* UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; };
 		2B8A447824FB5715008D6F3E /* UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -61,6 +60,7 @@
 		2B8A448E24FB57C6008D6F3E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B8A448D24FB57C6008D6F3E /* Preview Assets.xcassets */; };
 		2B8A44AF24FB57E7008D6F3E /* UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; };
 		2B8A44B024FB57E7008D6F3E /* UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B8A44B624FB5887008D6F3E /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A446924FB4E55008D6F3E /* Seeker.swift */; };
 		2BADBA7D24F5667000D78586 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211D24F15ADD00043684 /* Tuples.swift */; };
 		2BADBA8024F56F6800D78586 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BADBA7F24F56F6800D78586 /* Database.swift */; };
 		2BDEC9F424F3260E0079F839 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDEC9EB24F3260E0079F839 /* Core.framework */; };
@@ -603,7 +603,6 @@
 				2B400B9524F211F100F0AE32 /* Component.swift */,
 				2B79210824EEB7D300043684 /* PodcastExtView.swift */,
 				2B79212024F206D900043684 /* PodcastItemView.swift */,
-				2B8A446924FB4E55008D6F3E /* Seeker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -706,6 +705,7 @@
 		2B8A447124FB5715008D6F3E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2B8A44B524FB5875008D6F3E /* Sources */,
 				2B8A447224FB5715008D6F3E /* UI.h */,
 				2B8A447324FB5715008D6F3E /* Info.plist */,
 			);
@@ -730,6 +730,14 @@
 				2B8A448D24FB57C6008D6F3E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2B8A44B524FB5875008D6F3E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2B8A446924FB4E55008D6F3E /* Seeker.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		2BADBA7E24F56BD400D78586 /* DisplayPodcast */ = {
@@ -1434,7 +1442,6 @@
 			files = (
 				2B79212124F206D900043684 /* PodcastItemView.swift in Sources */,
 				2B79210B24EFFC1F00043684 /* FavoritePodcastWorkflow.swift in Sources */,
-				2B8A446A24FB4E55008D6F3E /* Seeker.swift in Sources */,
 				2BDECA1B24F328560079F839 /* PodcastExt+Extension.swift in Sources */,
 				2B8A442E24F6A0A3008D6F3E /* PlayingEpisodeView.swift in Sources */,
 				2B7BB6B824EA107A00D48B20 /* SearchPodcastsWorkflow.swift in Sources */,
@@ -1506,6 +1513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8A44B624FB5887008D6F3E /* Seeker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2059,6 +2067,7 @@
 		2B8A44A724FB57C7008D6F3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -2081,6 +2090,7 @@
 		2B8A44A824FB57C7008D6F3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
