@@ -10,7 +10,7 @@ import Nuke
 import FetchImage
 
 struct ImageView: View {
-    @ObservedObject var image: FetchImage
+    @StateObject var image: FetchImage
 
     var body: some View {
         ZStack {
@@ -25,6 +25,5 @@ struct ImageView: View {
 
         // (Optional) Cancel and restart requests during scrolling
         .onAppear(perform: image.fetch)
-        .onDisappear(perform: image.cancel)
     }
 }
