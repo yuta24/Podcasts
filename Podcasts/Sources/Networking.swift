@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import OSLog
+import Alamofire
 import FeedKit
 
 struct Networking {
@@ -15,6 +16,7 @@ struct Networking {
 
     var search: (String) -> AnyPublisher<SearchPodcastResult, Failure>
     var fetchPodcast: (URL) -> AnyPublisher<FetchPodcastResult, Failure>
+    var downloadEpisode: (URL) -> AnyPublisher<URL, Failure>
 }
 
 private let decoder: JSONDecoder = {
@@ -32,14 +34,8 @@ extension Networking {
 
             let mediaQueryItem: URLQueryItem? = URLQueryItem(name: "media", value: "podcast")
             let limitQueryItem: URLQueryItem? = URLQueryItem(name: "limit", value: "50")
-            let countryQueryItem: URLQueryItem? = Locale.current
-                .regionCode
-                .flatMap {
-                    URLQueryItem(name: "country", value: $0)
-                }
-            let termQueryItem: URLQueryItem? = escaped.flatMap {
-                URLQueryItem(name: "term", value: $0)
-            }
+            let countryQueryItem: URLQueryItem? = Locale.current.regionCode.flatMap { URLQueryItem(name: "country", value: $0) }
+            let termQueryItem: URLQueryItem? = escaped.flatMap { URLQueryItem(name: "term", value: $0) }
 
             var component = URLComponents(string: "https://itunes.apple.com/search")!
             component.queryItems = [mediaQueryItem, countryQueryItem, termQueryItem, limitQueryItem]
@@ -47,9 +43,8 @@ extension Networking {
 
             logger.debug("\(component.url!)")
 
-            return URLSession.shared.dataTaskPublisher(for: component.url!)
-                .map(\.data)
-                .decode(type: SearchPodcastResult.self, decoder: decoder)
+            return AF.request(component.url!).publishDecodable(type: SearchPodcastResult.self, decoder: decoder)
+                .value()
                 .mapError { _ in Failure() }
                 .eraseToAnyPublisher()
         },
@@ -71,6 +66,21 @@ extension Networking {
                 }
             }
             .eraseToAnyPublisher()
+        },
+        downloadEpisode: { url in
+            return Deferred {
+                Future<URL, Failure> { callback in
+                    AF.download(url).response { response in
+                        if let error = response.error {
+                            callback(.failure(Failure()))
+                        } else if let url = response.fileURL {
+                            callback(.success(url))
+                        }
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
         }
     )
 }
@@ -78,11 +88,15 @@ extension Networking {
 extension Networking {
     static let mock = Networking(
         search: { _ in
-            Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
+            Fail<SearchPodcastResult, Failure>(error: Failure())
                 .eraseToAnyPublisher()
         },
         fetchPodcast: { _ in
-            Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+            Fail<FetchPodcastResult, Failure>(error: Failure())
+                .eraseToAnyPublisher()
+        },
+        downloadEpisode: { _ in
+            Fail<URL, Failure>(error: Failure())
                 .eraseToAnyPublisher()
         }
     )

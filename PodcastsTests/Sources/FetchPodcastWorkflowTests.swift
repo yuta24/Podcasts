@@ -44,6 +44,10 @@ class FetchPodcastWorkflowTests: XCTestCase {
                     )
                     .setFailureType(to: Networking.Failure.self)
                     .eraseToAnyPublisher()
+                },
+                downloadEpisode: { _ in
+                    Fail<URL, Networking.Failure>(error: Networking.Failure())
+                        .eraseToAnyPublisher()
                 }
             )
         )

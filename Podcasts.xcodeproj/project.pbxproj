@@ -39,6 +39,8 @@
 		2B7EB4BD24F545A4004CF488 /* PlayingEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */; };
 		2B7EB4C024F54C99004CF488 /* SQLDataType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */; };
 		2B7EB4C124F54F96004CF488 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7BB6B424EA0F6400D48B20 /* Podcast.swift */; };
+		2B7F30502500F93900091C77 /* DownloadEpisodeWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7F304F2500F93900091C77 /* DownloadEpisodeWorkflow.swift */; };
+		2B7F30532500FC8A00091C77 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2B7F30522500FC8A00091C77 /* Alamofire */; };
 		2B8A442E24F6A0A3008D6F3E /* PlayingEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A442D24F6A0A3008D6F3E /* PlayingEpisodeView.swift */; };
 		2B8A443024F74A86008D6F3E /* ApplicationDelegateAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A442F24F74A86008D6F3E /* ApplicationDelegateAdaptor.swift */; };
 		2B8A443224F74C75008D6F3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B8A443124F74C75008D6F3E /* GoogleService-Info.plist */; };
@@ -61,6 +63,8 @@
 		2B8A44AF24FB57E7008D6F3E /* UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; };
 		2B8A44B024FB57E7008D6F3E /* UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8A447024FB5714008D6F3E /* UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B8A44B624FB5887008D6F3E /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A446924FB4E55008D6F3E /* Seeker.swift */; };
+		2BA3CD43250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD42250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift */; };
+		2BA3CD4F250C865E00B98EAD /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = 2BA3CD4E250C865E00B98EAD /* Mocker */; };
 		2BADBA7D24F5667000D78586 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B79211D24F15ADD00043684 /* Tuples.swift */; };
 		2BADBA8024F56F6800D78586 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BADBA7F24F56F6800D78586 /* Database.swift */; };
 		2BDEC9F424F3260E0079F839 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDEC9EB24F3260E0079F839 /* Core.framework */; };
@@ -282,6 +286,7 @@
 		2B7EB4AE24F53FBB004CF488 /* PlayingEpisodeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisodeDataStore.swift; sourceTree = "<group>"; };
 		2B7EB4BC24F545A4004CF488 /* PlayingEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisode.swift; sourceTree = "<group>"; };
 		2B7EB4BF24F54C99004CF488 /* SQLDataType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLDataType+Extension.swift"; sourceTree = "<group>"; };
+		2B7F304F2500F93900091C77 /* DownloadEpisodeWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEpisodeWorkflow.swift; sourceTree = "<group>"; };
 		2B8A442D24F6A0A3008D6F3E /* PlayingEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingEpisodeView.swift; sourceTree = "<group>"; };
 		2B8A442F24F74A86008D6F3E /* ApplicationDelegateAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegateAdaptor.swift; sourceTree = "<group>"; };
 		2B8A443124F74C75008D6F3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -308,6 +313,7 @@
 		2B8A448A24FB57C6008D6F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B8A448D24FB57C6008D6F3E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2B8A448F24FB57C6008D6F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BA3CD42250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEpisodeWorkflowTests.swift; sourceTree = "<group>"; };
 		2BADBA7F24F56F6800D78586 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		2BDEC9EB24F3260E0079F839 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDEC9ED24F3260E0079F839 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
@@ -348,6 +354,7 @@
 				2B05896024E96A9F00D42170 /* ComposableArchitecture in Frameworks */,
 				2BDECA0024F3260E0079F839 /* Core.framework in Frameworks */,
 				2B7BB6DA24EC143E00D48B20 /* FeedKit in Frameworks */,
+				2B7F30532500FC8A00091C77 /* Alamofire in Frameworks */,
 				DA2B9F709CF84E970221FA89 /* Pods_Podcasts.framework in Frameworks */,
 				2B8A447724FB5715008D6F3E /* UI.framework in Frameworks */,
 			);
@@ -358,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9182C6B68279A65FBC4E791 /* Pods_PodcastsTests.framework in Frameworks */,
+				2BA3CD4F250C865E00B98EAD /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +618,7 @@
 		2B7BB6B124EA0D6800D48B20 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2BA3CD42250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift */,
 				2B79210C24EFFC4700043684 /* FavoritePodcastWorkflowTests.swift */,
 				2B7BB6E124EC1C6400D48B20 /* FetchPodcastWorkflowTests.swift */,
 				2B7BB6B224EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift */,
@@ -622,6 +631,7 @@
 		2B7BB6B624EA107000D48B20 /* Workflows */ = {
 			isa = PBXGroup;
 			children = (
+				2B7F304F2500F93900091C77 /* DownloadEpisodeWorkflow.swift */,
 				2B79210A24EFFC1F00043684 /* FavoritePodcastWorkflow.swift */,
 				2B7BB6DD24EC176300D48B20 /* FetchPodcastWorkflow.swift */,
 				2B7BB6B724EA107A00D48B20 /* SearchPodcastsWorkflow.swift */,
@@ -875,6 +885,7 @@
 			packageProductDependencies = (
 				2B05895F24E96A9F00D42170 /* ComposableArchitecture */,
 				2B7BB6D924EC143E00D48B20 /* FeedKit */,
+				2B7F30522500FC8A00091C77 /* Alamofire */,
 			);
 			productName = Podcasts;
 			productReference = 2B05893024E96A0100D42170 /* Podcasts.app */;
@@ -895,6 +906,9 @@
 				2B05894324E96A0400D42170 /* PBXTargetDependency */,
 			);
 			name = PodcastsTests;
+			packageProductDependencies = (
+				2BA3CD4E250C865E00B98EAD /* Mocker */,
+			);
 			productName = PodcastsTests;
 			productReference = 2B05894124E96A0400D42170 /* PodcastsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1140,6 +1154,8 @@
 				2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */,
 				2B7BB6D824EC143E00D48B20 /* XCRemoteSwiftPackageReference "FeedKit" */,
 				2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */,
+				2B7F30512500FC8A00091C77 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				2BA3CD4D250C865E00B98EAD /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = 2B05893124E96A0100D42170 /* Products */;
 			projectDirPath = "";
@@ -1440,6 +1456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7F30502500F93900091C77 /* DownloadEpisodeWorkflow.swift in Sources */,
 				2B79212124F206D900043684 /* PodcastItemView.swift in Sources */,
 				2B79210B24EFFC1F00043684 /* FavoritePodcastWorkflow.swift in Sources */,
 				2BDECA1B24F328560079F839 /* PodcastExt+Extension.swift in Sources */,
@@ -1468,6 +1485,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BA3CD43250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift in Sources */,
 				2B7BB6B324EA0E1700D48B20 /* SearchPodcastsWorkflowTests.swift in Sources */,
 				2B79210D24EFFC4700043684 /* FavoritePodcastWorkflowTests.swift in Sources */,
 				2B79211524F00C0000043684 /* UnfavoritePodcastWorkflowTests.swift in Sources */,
@@ -2410,6 +2428,22 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		2B7F30512500FC8A00091C77 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
+		2BA3CD4D250C865E00B98EAD /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeTransfer/Mocker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2433,6 +2467,11 @@
 			package = 2B7EB4B524F54167004CF488 /* XCRemoteSwiftPackageReference "SwiftSQL" */;
 			productName = SwiftSQLExt;
 		};
+		2B7F30522500FC8A00091C77 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B7F30512500FC8A00091C77 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		2B8A447C24FB5730008D6F3E /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2B7BB6C524EAC95000D48B20 /* XCRemoteSwiftPackageReference "Nuke" */;
@@ -2442,6 +2481,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2B7BB6CB24EACCEA00D48B20 /* XCRemoteSwiftPackageReference "FetchImage" */;
 			productName = FetchImage;
+		};
+		2BA3CD4E250C865E00B98EAD /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BA3CD4D250C865E00B98EAD /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -35,6 +35,10 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                 fetchPodcast: { _ in
                     Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
+                },
+                downloadEpisode: { _ in
+                    Fail<URL, Networking.Failure>(error: Networking.Failure())
+                        .eraseToAnyPublisher()
                 }
             )
         )
@@ -87,6 +91,10 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                 },
                 fetchPodcast: { _ in
                     Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
+                        .eraseToAnyPublisher()
+                },
+                downloadEpisode: { _ in
+                    Fail<URL, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
                 }
             )
