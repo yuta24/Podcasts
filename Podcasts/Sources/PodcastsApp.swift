@@ -63,8 +63,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         .pullback(
             state: \.playingEpisodeState,
             action: /AppAction.playingEpisode,
-            environment: { _ in
-                PlayingEpisodeEnvironment()
+            environment: {
+                PlayingEpisodeEnvironment(
+                    downloadEpisodeWorkflow: DownloadEpisodeWorkflow(networking: $0.networking),
+                    mainQueue: $0.mainQueue
+                )
             }
         ),
     .init { state, action, environment in
@@ -97,7 +100,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     position: 0,
                     duration: episode.duration!,
                     imageUrl: episode.imageUrl!,
-                    enclosure: episode.enclosure!
+                    enclosure: episode.enclosure!,
+                    fileUrl: .none
                 ),
                 playing: false
             )
@@ -115,7 +119,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     position: 0,
                     duration: episode.duration!,
                     imageUrl: episode.imageUrl!,
-                    enclosure: episode.enclosure!
+                    enclosure: episode.enclosure!,
+                    fileUrl: .none
                 ),
                 playing: false
             )

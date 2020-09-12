@@ -27,7 +27,7 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         // Given
         workflow = SearchPodcastsWorkflow(
             networking: Networking(
-                search: { _ in
+                searchPodcasts: { _ in
                     Just(SearchPodcastResult(resultCount: 0, results: []))
                         .setFailureType(to: Networking.Failure.self)
                         .eraseToAnyPublisher()
@@ -70,7 +70,7 @@ class SearchPodcastsWorkflowTests: XCTestCase {
         // Given
         workflow = SearchPodcastsWorkflow(
             networking: Networking(
-                search: { _ in
+                searchPodcasts: { _ in
                     Just(
                         SearchPodcastResult(
                             resultCount: 1,

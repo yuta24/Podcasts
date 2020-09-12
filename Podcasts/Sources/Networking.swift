@@ -14,7 +14,7 @@ import FeedKit
 struct Networking {
     struct Failure: Error, Equatable {}
 
-    var search: (String) -> AnyPublisher<SearchPodcastResult, Failure>
+    var searchPodcasts: (String) -> AnyPublisher<SearchPodcastResult, Failure>
     var fetchPodcast: (URL) -> AnyPublisher<FetchPodcastResult, Failure>
     var downloadEpisode: (URL) -> AnyPublisher<URL, Failure>
 }
@@ -29,7 +29,7 @@ private let logger = Logger(subsystem: "com.bivre.podcasts", category: "Networki
 
 extension Networking {
     static let live = Networking(
-        search: { searchText in
+        searchPodcasts: { searchText in
             let escaped = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 
             let mediaQueryItem: URLQueryItem? = URLQueryItem(name: "media", value: "podcast")
@@ -56,10 +56,8 @@ extension Networking {
                     parser.parseAsync { result in
                         switch result {
                         case let .success(feed):
-                            debugPrint(feed)
                             callback(.success(FetchPodcastResult(feed.rssFeed!)))
                         case let .failure(parserError):
-                            debugPrint("Failed to parse XML feed:", parserError)
                             callback(.failure(Failure()))
                         }
                     }
@@ -74,6 +72,7 @@ extension Networking {
                         if let error = response.error {
                             callback(.failure(Failure()))
                         } else if let url = response.fileURL {
+                            logger.debug("\(url)")
                             callback(.success(url))
                         }
                     }
@@ -87,7 +86,7 @@ extension Networking {
 
 extension Networking {
     static let mock = Networking(
-        search: { _ in
+        searchPodcasts: { _ in
             Fail<SearchPodcastResult, Failure>(error: Failure())
                 .eraseToAnyPublisher()
         },

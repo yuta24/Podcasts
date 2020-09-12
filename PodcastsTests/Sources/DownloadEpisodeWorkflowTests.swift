@@ -28,7 +28,7 @@ class DownloadEpisodeWorkflowTests: XCTestCase {
         // Given
         workflow = DownloadEpisodeWorkflow(
             networking: Networking(
-                search: { _ in
+                searchPodcasts: { _ in
                     Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
                 },
@@ -49,13 +49,12 @@ class DownloadEpisodeWorkflowTests: XCTestCase {
         let exp = expectation(description: "\(#function):\(#line)")
 
         // When
-        workflow.execute(Podcast(
-                            trackName: "Title",
-                            artistName: "Artist",
-                            artworkUrl600: URL(string: ""),
-                            trackCount: 2,
-                            feedUrl: URL(string: "https://github.com/yuta24/Podcasts"),
-                            releaseDate: Date()))
+        workflow.execute(PlayingEpisode(
+                            title: "Title",
+                            position: 0,
+                            duration: 120,
+                            imageUrl: URL(string: "https://google.com")!,
+                            enclosure: URL(string: "https://github.com/yuta24/Podcasts")!))
             .sink(
                 receiveCompletion: { completion in
                     exp.fulfill()

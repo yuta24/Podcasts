@@ -26,7 +26,7 @@ class FetchPodcastWorkflowTests: XCTestCase {
         // Given
         workflow = FetchPodcastWorkflow(
             networking: Networking(
-                search: { _ in
+                searchPodcasts: { _ in
                     Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
                         .eraseToAnyPublisher()
                 },

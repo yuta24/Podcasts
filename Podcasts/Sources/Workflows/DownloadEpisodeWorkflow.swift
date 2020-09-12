@@ -16,7 +16,7 @@ struct DownloadEpisodeWorkflow {
         self.networking = networking
     }
 
-    func execute(_ podcast: Podcast) -> AnyPublisher<URL, Networking.Failure> {
-        networking.downloadEpisode(podcast.feedUrl!)
+    func execute(_ episode: PlayingEpisode) -> AnyPublisher<URL, Networking.Failure> {
+        networking.downloadEpisode(episode.enclosure)
     }
 }

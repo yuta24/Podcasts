@@ -14,20 +14,44 @@ import Core
 struct PlayingEpisodeState: Equatable {
     var episode: PlayingEpisode
     var playing: Bool
+
+    var alertState: AlertState<DisplayPodcastAction>?
 }
 
 enum PlayingEpisodeAction: Equatable {
+    case download
+    case downloadResponse(Result<URL, Networking.Failure>)
+
     case resume
     case pause
+
+    case alertDismissed
 }
 
 struct PlayingEpisodeEnvironment {
+    var downloadEpisodeWorkflow: DownloadEpisodeWorkflow
+    var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
 let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, PlayingEpisodeEnvironment>.combine(
     .init { state, action, environment in
 
         switch action {
+
+        case .download:
+            return environment.downloadEpisodeWorkflow.execute(state.episode)
+                .catchToEffect()
+                .map(PlayingEpisodeAction.downloadResponse)
+
+        case .downloadResponse(.success(let url)):
+            state.episode.fileUrl = url
+
+            return .none
+
+        case .downloadResponse(.failure(let error)):
+            state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+
+            return .none
 
         case .resume:
             state.playing = true
@@ -36,6 +60,11 @@ let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, P
 
         case .pause:
             state.playing = false
+
+            return .none
+
+        case .alertDismissed:
+            state.alertState = .none
 
             return .none
 
@@ -56,6 +85,7 @@ struct PlayingEpisodeView: View {
                     ImageView(image: .init(url: viewStore.episode.imageUrl))
                         .frame(width: 240, height: 240)
                         .cornerRadius(8)
+                        .padding()
 
                     Text("\(viewStore.episode.title)")
                         .font(.title2)
@@ -85,6 +115,9 @@ struct PlayingEpisodeView: View {
                     }
                 }
                 .padding()
+            }
+            .onAppear {
+                viewStore.send(.download)
             }
         }
     }

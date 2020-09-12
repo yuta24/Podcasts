@@ -16,6 +16,6 @@ struct SearchPodcastsWorkflow {
     }
 
     func execute(_ searchText: String) -> AnyPublisher<SearchPodcastResult, Networking.Failure> {
-        networking.search(searchText)
+        networking.searchPodcasts(searchText)
     }
 }
