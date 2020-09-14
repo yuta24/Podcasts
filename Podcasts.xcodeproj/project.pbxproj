@@ -531,11 +531,11 @@
 			children = (
 				2B05896424E974A500D42170 /* Features */,
 				2B05896724E975CA00D42170 /* Models */,
+				2BA3CD53250FA0CE00B98EAD /* Services */,
 				2B7BB6C824EACA1B00D48B20 /* Views */,
 				2B7BB6B624EA107000D48B20 /* Workflows */,
 				2B8A442F24F74A86008D6F3E /* ApplicationDelegateAdaptor.swift */,
 				2B05893324E96A0100D42170 /* PodcastsApp.swift */,
-				2B7BB6B924EA13F000D48B20 /* Networking.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -748,6 +748,14 @@
 				2B8A446924FB4E55008D6F3E /* Seeker.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		2BA3CD53250FA0CE00B98EAD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2B7BB6B924EA13F000D48B20 /* Networking.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		2BADBA7E24F56BD400D78586 /* DisplayPodcast */ = {
