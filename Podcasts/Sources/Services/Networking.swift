@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import OSLog
+import os.log
 import Alamofire
 import FeedKit
 
@@ -66,7 +66,7 @@ extension Networking {
             .eraseToAnyPublisher()
         },
         downloadEpisode: { url in
-            return Deferred {
+            Deferred {
                 Future<URL, Failure> { callback in
                     AF.download(url).response { response in
                         if let error = response.error {

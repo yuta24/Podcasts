@@ -92,7 +92,7 @@ let searchPodcastsReducer = Reducer<SearchPodcastsState, SearchPodcastsAction, S
             return .none
 
         case .podcastsResponse(.failure(let error)):
-            state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+            state.alertState = .init(title: "Error", message: .init(error.localizedDescription), dismissButton: .default("OK", send: .alertDismissed))
 
             return .none
 

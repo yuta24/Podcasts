@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import OSLog
+import os.log
 import SwiftSQL
 
 public struct PlayingEpisodeDataStore {

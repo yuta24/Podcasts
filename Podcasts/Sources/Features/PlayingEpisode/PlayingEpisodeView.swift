@@ -14,57 +14,45 @@ import Core
 struct PlayingEpisodeState: Equatable {
     var episode: PlayingEpisode
     var playing: Bool
-
-    var alertState: AlertState<DisplayPodcastAction>?
 }
 
 enum PlayingEpisodeAction: Equatable {
-    case download
-    case downloadResponse(Result<URL, Networking.Failure>)
-
-    case resume
+    case play
+    case played
     case pause
-
-    case alertDismissed
+    case paused
 }
 
 struct PlayingEpisodeEnvironment {
-    var downloadEpisodeWorkflow: DownloadEpisodeWorkflow
+    var playEpisodeWorkflow: PlayEpisodeWorkflow
+    var pauseEpisodeWorkflow: PauseEpisodeWorkflow
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
+
+//let audioPlayerReducer = Reducer<PlayingEpisodeState, AudioPlayer.Action, PlayingEpisodeEnvironment>
 
 let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, PlayingEpisodeEnvironment>.combine(
     .init { state, action, environment in
 
         switch action {
 
-        case .download:
-            return environment.downloadEpisodeWorkflow.execute(state.episode)
+        case .play:
+            return environment.playEpisodeWorkflow.execute(state.episode)
                 .catchToEffect()
-                .map(PlayingEpisodeAction.downloadResponse)
+                .map { _ in PlayingEpisodeAction.played }
 
-        case .downloadResponse(.success(let url)):
-            state.episode.fileUrl = url
-
-            return .none
-
-        case .downloadResponse(.failure(let error)):
-            state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
-
-            return .none
-
-        case .resume:
+        case .played:
             state.playing = true
 
             return .none
 
         case .pause:
+            return environment.pauseEpisodeWorkflow.execute()
+                .catchToEffect()
+                .map { _ in PlayingEpisodeAction.paused }
+
+        case .paused:
             state.playing = false
-
-            return .none
-
-        case .alertDismissed:
-            state.alertState = .none
 
             return .none
 
@@ -97,18 +85,18 @@ struct PlayingEpisodeView: View {
                                 if viewStore.playing {
                                     viewStore.send(.pause)
                                 } else {
-                                    viewStore.send(.resume)
+                                    viewStore.send(.play)
                                 }
                             },
                             label: {
                                 if viewStore.playing {
                                     Image(systemName: "pause.fill")
                                         .resizable()
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: 36, height: 36)
                                 } else {
                                     Image(systemName: "play.fill")
                                         .resizable()
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: 36, height: 36)
                                 }
                             }
                         )
@@ -116,8 +104,8 @@ struct PlayingEpisodeView: View {
                 }
                 .padding()
             }
-            .onAppear {
-                viewStore.send(.download)
+            .onDisappear {
+                viewStore.send(.pause)
             }
         }
     }

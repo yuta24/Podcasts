@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import OSLog
+import os.log
 
 public struct FavoritedPodcastDataStore {
     public var fetchs: () -> AnyPublisher<[Podcast], Never>

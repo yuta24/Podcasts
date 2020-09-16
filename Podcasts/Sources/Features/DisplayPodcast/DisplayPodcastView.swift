@@ -71,7 +71,7 @@ let displayPodcastReducer = Reducer<DisplayPodcastState, DisplayPodcastAction, D
             return .init(value: .load(result))
 
         case .fetchResponse(.failure(let error)):
-            state.alertState = .init(title: "Error", message: error.localizedDescription, dismissButton: .default("OK", send: .alertDismissed))
+            state.alertState = .init(title: "Error", message: .init(error.localizedDescription), dismissButton: .default("OK", send: .alertDismissed))
 
             return .none
 
