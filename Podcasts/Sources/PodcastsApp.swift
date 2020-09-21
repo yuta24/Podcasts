@@ -104,8 +104,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!,
                     fileUrl: .none
-                ),
-                playing: false
+                )
             )
 
             return .none
@@ -123,8 +122,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                     imageUrl: episode.imageUrl!,
                     enclosure: episode.enclosure!,
                     fileUrl: .none
-                ),
-                playing: false
+                )
             )
 
             return .none

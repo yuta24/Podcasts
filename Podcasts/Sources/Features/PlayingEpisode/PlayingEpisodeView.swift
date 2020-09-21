@@ -19,8 +19,22 @@ private extension CMTime {
 }
 
 struct PlayingEpisodeState: Equatable {
+    enum PlayingState: Equatable {
+        case stop
+        case playing
+        case suspension
+
+        var isPlaying: Bool {
+            if case .playing = self {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
     var episode: PlayingEpisode
-    var playing: Bool
+    var playingState: PlayingState = .stop
 }
 
 enum PlayingEpisodeAction: Equatable {
@@ -43,7 +57,7 @@ let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, P
         switch action {
 
         case .play:
-            state.playing = true
+            state.playingState = .playing
             return environment.playEpisodeWorkflow.execute(id: AudioClientId(), episode: state.episode)
                 .map(PlayingEpisodeAction.playing)
 
@@ -53,7 +67,7 @@ let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, P
             return .none
 
         case .pause:
-            state.playing = false
+            state.playingState = .suspension
             return environment.pauseEpisodeWorkflow.execute(id: AudioClientId())
                 .fireAndForget()
 
@@ -95,18 +109,23 @@ struct PlayingEpisodeView: View {
                     HStack {
                         Button(
                             action: {
-                                if viewStore.playing {
+                                if viewStore.playingState.isPlaying {
                                     viewStore.send(.pause)
                                 } else {
                                     viewStore.send(.play)
                                 }
                             },
                             label: {
-                                if viewStore.playing {
+                                switch viewStore.playingState {
+                                case .stop:
+                                    Image(systemName: "play.fill")
+                                        .resizable()
+                                        .frame(width: 36, height: 36)
+                                case .playing:
                                     Image(systemName: "pause.fill")
                                         .resizable()
                                         .frame(width: 36, height: 36)
-                                } else {
+                                case .suspension:
                                     Image(systemName: "play.fill")
                                         .resizable()
                                         .frame(width: 36, height: 36)
