@@ -65,7 +65,7 @@
 		2B8A44B624FB5887008D6F3E /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8A446924FB4E55008D6F3E /* Seeker.swift */; };
 		2BA3CD43250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD42250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift */; };
 		2BA3CD4F250C865E00B98EAD /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = 2BA3CD4E250C865E00B98EAD /* Mocker */; };
-		2BA3CD55250FA21100B98EAD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD54250FA21100B98EAD /* AudioManager.swift */; };
+		2BA3CD55250FA21100B98EAD /* AudioClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD54250FA21100B98EAD /* AudioClient.swift */; };
 		2BA3CD572510F66D00B98EAD /* Publishers+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD562510F66D00B98EAD /* Publishers+AVPlayer.swift */; };
 		2BA3CD5A2510F70F00B98EAD /* PlayEpisodeWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD592510F70F00B98EAD /* PlayEpisodeWorkflow.swift */; };
 		2BA3CD5C2510F7FF00B98EAD /* PauseEpisodeWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3CD5B2510F7FF00B98EAD /* PauseEpisodeWorkflow.swift */; };
@@ -318,7 +318,7 @@
 		2B8A448D24FB57C6008D6F3E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2B8A448F24FB57C6008D6F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BA3CD42250C6DB900B98EAD /* DownloadEpisodeWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEpisodeWorkflowTests.swift; sourceTree = "<group>"; };
-		2BA3CD54250FA21100B98EAD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		2BA3CD54250FA21100B98EAD /* AudioClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClient.swift; sourceTree = "<group>"; };
 		2BA3CD562510F66D00B98EAD /* Publishers+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+AVPlayer.swift"; sourceTree = "<group>"; };
 		2BA3CD592510F70F00B98EAD /* PlayEpisodeWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEpisodeWorkflow.swift; sourceTree = "<group>"; };
 		2BA3CD5B2510F7FF00B98EAD /* PauseEpisodeWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseEpisodeWorkflow.swift; sourceTree = "<group>"; };
@@ -764,7 +764,7 @@
 		2BA3CD53250FA0CE00B98EAD /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2BA3CD54250FA21100B98EAD /* AudioManager.swift */,
+				2BA3CD54250FA21100B98EAD /* AudioClient.swift */,
 				2B7BB6B924EA13F000D48B20 /* Networking.swift */,
 			);
 			path = Services;
@@ -1487,7 +1487,7 @@
 				2B7F30502500F93900091C77 /* DownloadEpisodeWorkflow.swift in Sources */,
 				2B79212124F206D900043684 /* PodcastItemView.swift in Sources */,
 				2B79210B24EFFC1F00043684 /* FavoritePodcastWorkflow.swift in Sources */,
-				2BA3CD55250FA21100B98EAD /* AudioManager.swift in Sources */,
+				2BA3CD55250FA21100B98EAD /* AudioClient.swift in Sources */,
 				2BA3CD572510F66D00B98EAD /* Publishers+AVPlayer.swift in Sources */,
 				2BDECA1B24F328560079F839 /* PodcastExt+Extension.swift in Sources */,
 				2B8A442E24F6A0A3008D6F3E /* PlayingEpisodeView.swift in Sources */,

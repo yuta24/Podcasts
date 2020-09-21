@@ -7,16 +7,17 @@
 
 import Foundation
 import Combine
+import ComposableArchitecture
 import Core
 
 struct PauseEpisodeWorkflow {
-    let manager: AudioManager
+    let client: AudioClient
 
-    init(manager: AudioManager) {
-        self.manager = manager
+    init(client: AudioClient) {
+        self.client = client
     }
 
-    func execute() -> AnyPublisher<Void, Never> {
-        manager.pause()
+    func execute(id: AnyHashable) -> Effect<Never, Never> {
+        client.pause(id)
     }
 }

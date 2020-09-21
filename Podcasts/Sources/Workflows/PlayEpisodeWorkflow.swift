@@ -7,16 +7,17 @@
 
 import Foundation
 import Combine
+import ComposableArchitecture
 import Core
 
 struct PlayEpisodeWorkflow {
-    let manager: AudioManager
+    let client: AudioClient
 
-    init(manager: AudioManager) {
-        self.manager = manager
+    init(client: AudioClient) {
+        self.client = client
     }
 
-    func execute(_ episode: PlayingEpisode) -> AnyPublisher<Void, Never> {
-        manager.play(episode.enclosure)
+    func execute(id: AnyHashable, episode: PlayingEpisode) -> Effect<AudioClient.Action, Never> {
+        client.play(id, episode.enclosure)
     }
 }

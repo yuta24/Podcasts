@@ -31,7 +31,7 @@ enum AppAction: Equatable {
 
 struct AppEnvironment {
     var networking: Networking
-    var audioManager: AudioManager
+    var audioClient: AudioClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var favoritedPodcastDataStore: FavoritedPodcastDataStore
 }
@@ -66,8 +66,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             action: /AppAction.playingEpisode,
             environment: {
                 PlayingEpisodeEnvironment(
-                    playEpisodeWorkflow: PlayEpisodeWorkflow(manager: $0.audioManager),
-                    pauseEpisodeWorkflow: PauseEpisodeWorkflow(manager: $0.audioManager),
+                    playEpisodeWorkflow: PlayEpisodeWorkflow(client: $0.audioClient),
+                    pauseEpisodeWorkflow: PauseEpisodeWorkflow(client: $0.audioClient),
                     mainQueue: $0.mainQueue
                 )
             }
@@ -153,7 +153,7 @@ struct PodcastsApp: App {
         reducer: appReducer.debug(),
         environment: .init(
             networking: .live,
-            audioManager: .live,
+            audioClient: .live,
             mainQueue: DispatchQueue.main.eraseToAnyScheduler(),
             favoritedPodcastDataStore: .live
         )
@@ -185,6 +185,8 @@ struct PodcastsApp: App {
                             state: { $0.playingEpisodeState }, action: AppAction.playingEpisode),
                         then: PlayingEpisodeView.init(store:)
                     )
+                }
+                .onOpenURL { url in
                 }
             }
         }

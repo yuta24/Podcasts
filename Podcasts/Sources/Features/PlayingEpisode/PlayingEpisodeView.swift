@@ -5,11 +5,18 @@
 //  Created by Yu Tawata on 2020/08/26.
 //
 
+import AVFoundation
 import Combine
 import SwiftUI
 import ComposableArchitecture
 import FetchImage
 import Core
+
+private extension CMTime {
+    var secondes: Int64 {
+        value / Int64(timescale)
+    }
+}
 
 struct PlayingEpisodeState: Equatable {
     var episode: PlayingEpisode
@@ -18,9 +25,8 @@ struct PlayingEpisodeState: Equatable {
 
 enum PlayingEpisodeAction: Equatable {
     case play
-    case played
+    case playing(AudioClient.Action)
     case pause
-    case paused
 }
 
 struct PlayingEpisodeEnvironment {
@@ -29,37 +35,40 @@ struct PlayingEpisodeEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
-//let audioPlayerReducer = Reducer<PlayingEpisodeState, AudioPlayer.Action, PlayingEpisodeEnvironment>
-
 let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, PlayingEpisodeEnvironment>.combine(
     .init { state, action, environment in
+
+        struct AudioClientId: Hashable {}
 
         switch action {
 
         case .play:
-            return environment.playEpisodeWorkflow.execute(state.episode)
-                .catchToEffect()
-                .map { _ in PlayingEpisodeAction.played }
-
-        case .played:
             state.playing = true
+            return environment.playEpisodeWorkflow.execute(id: AudioClientId(), episode: state.episode)
+                .map(PlayingEpisodeAction.playing)
+
+        case .playing(.updatePeriodicTime(let time)):
+            state.episode.position = TimeInterval(time.seconds)
 
             return .none
 
         case .pause:
-            return environment.pauseEpisodeWorkflow.execute()
-                .catchToEffect()
-                .map { _ in PlayingEpisodeAction.paused }
-
-        case .paused:
             state.playing = false
-
-            return .none
+            return environment.pauseEpisodeWorkflow.execute(id: AudioClientId())
+                .fireAndForget()
 
         }
 
     }
 )
+
+private let formatter: DateComponentsFormatter = {
+    let formatter = DateComponentsFormatter()
+    formatter.unitsStyle = .positional
+    formatter.allowedUnits = [.hour, .minute, .second]
+    formatter.zeroFormattingBehavior = .pad
+    return formatter
+}()
 
 struct PlayingEpisodeView: View {
     let store: Store<PlayingEpisodeState, PlayingEpisodeAction>
@@ -78,6 +87,10 @@ struct PlayingEpisodeView: View {
                     Text("\(viewStore.episode.title)")
                         .font(.title2)
                         .bold()
+
+                    HStack {
+                        Text("\(formatter.string(from: viewStore.episode.position)!) ~ \(formatter.string(from: viewStore.episode.duration)!)")
+                    }
 
                     HStack {
                         Button(
