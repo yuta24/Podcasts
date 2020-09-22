@@ -20,7 +20,9 @@ struct AudioClient {
     }
 
     var play: (AnyHashable, URL) -> Effect<Action, Never>
+    var resume: (AnyHashable) -> Effect<Never, Never>
     var pause: (AnyHashable) -> Effect<Never, Never>
+    var stop: (AnyHashable) -> Effect<Never, Never>
     var rate: (AnyHashable) -> Float?
     var currentTime: (AnyHashable) -> CMTime?
 
@@ -56,7 +58,17 @@ extension AudioClient {
                 }
                 .cancellable(id: id)
             },
+            resume: { id in
+                Effect.fireAndForget {
+                    dependencies[id]?.player.play()
+                }
+            },
             pause: { id in
+                Effect.fireAndForget {
+                    dependencies[id]?.player.pause()
+                }
+            },
+            stop: { id in
                 Effect.fireAndForget {
                     dependencies[id]?.player.pause()
                     dependencies[id] = .none

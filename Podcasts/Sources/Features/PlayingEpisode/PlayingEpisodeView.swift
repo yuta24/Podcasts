@@ -39,13 +39,17 @@ struct PlayingEpisodeState: Equatable {
 
 enum PlayingEpisodeAction: Equatable {
     case play
+    case resume
     case playing(AudioClient.Action)
     case pause
+    case stop
 }
 
 struct PlayingEpisodeEnvironment {
     var playEpisodeWorkflow: PlayEpisodeWorkflow
     var pauseEpisodeWorkflow: PauseEpisodeWorkflow
+    var resumeEpisodeWorkflow: ResumeEpisodeWorkflow
+    var stopEpisodeWorkflow: StopEpisodeWorkflow
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
@@ -61,6 +65,11 @@ let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, P
             return environment.playEpisodeWorkflow.execute(id: AudioClientId(), episode: state.episode)
                 .map(PlayingEpisodeAction.playing)
 
+        case .resume:
+            state.playingState = .playing
+            return environment.resumeEpisodeWorkflow.execute(id: AudioClientId())
+                .fireAndForget()
+
         case .playing(.updatePeriodicTime(let time)):
             state.episode.position = TimeInterval(time.seconds)
 
@@ -69,6 +78,11 @@ let playingEpisodeReducer = Reducer<PlayingEpisodeState, PlayingEpisodeAction, P
         case .pause:
             state.playingState = .suspension
             return environment.pauseEpisodeWorkflow.execute(id: AudioClientId())
+                .fireAndForget()
+
+        case .stop:
+            state.playingState = .stop
+            return environment.stopEpisodeWorkflow.execute(id: AudioClientId())
                 .fireAndForget()
 
         }
@@ -109,10 +123,13 @@ struct PlayingEpisodeView: View {
                     HStack {
                         Button(
                             action: {
-                                if viewStore.playingState.isPlaying {
-                                    viewStore.send(.pause)
-                                } else {
+                                switch viewStore.playingState {
+                                case .stop:
                                     viewStore.send(.play)
+                                case .playing:
+                                    viewStore.send(.pause)
+                                case .suspension:
+                                    viewStore.send(.resume)
                                 }
                             },
                             label: {
@@ -137,7 +154,7 @@ struct PlayingEpisodeView: View {
                 .padding()
             }
             .onDisappear {
-                viewStore.send(.pause)
+                viewStore.send(.stop)
             }
         }
     }

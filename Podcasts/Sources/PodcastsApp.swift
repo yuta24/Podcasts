@@ -68,6 +68,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
                 PlayingEpisodeEnvironment(
                     playEpisodeWorkflow: PlayEpisodeWorkflow(client: $0.audioClient),
                     pauseEpisodeWorkflow: PauseEpisodeWorkflow(client: $0.audioClient),
+                    resumeEpisodeWorkflow: ResumeEpisodeWorkflow(client: $0.audioClient),
+                    stopEpisodeWorkflow: StopEpisodeWorkflow(client: $0.audioClient),
                     mainQueue: $0.mainQueue
                 )
             }
