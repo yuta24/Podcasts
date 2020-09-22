@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ComposableArchitecture
 
 struct SearchPodcastsWorkflow {
     let networking: Networking
@@ -15,7 +16,7 @@ struct SearchPodcastsWorkflow {
         self.networking = networking
     }
 
-    func execute(_ searchText: String) -> AnyPublisher<SearchPodcastResult, Networking.Failure> {
+    func execute(_ searchText: String) -> Effect<SearchPodcastResult, Networking.Failure> {
         networking.searchPodcasts(searchText)
     }
 }

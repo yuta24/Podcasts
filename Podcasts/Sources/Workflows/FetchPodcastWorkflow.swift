@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ComposableArchitecture
 
 struct FetchPodcastWorkflow {
     let networking: Networking
@@ -15,7 +16,7 @@ struct FetchPodcastWorkflow {
         self.networking = networking
     }
 
-    func execute(_ feedUrl: URL) -> AnyPublisher<FetchPodcastResult, Networking.Failure> {
+    func execute(_ feedUrl: URL) -> Effect<FetchPodcastResult, Networking.Failure> {
         networking.fetchPodcast(feedUrl)
     }
 }

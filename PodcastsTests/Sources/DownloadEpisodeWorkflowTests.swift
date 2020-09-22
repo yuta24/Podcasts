@@ -7,8 +7,9 @@
 
 import Combine
 import XCTest
-import Core
+import ComposableArchitecture
 import Mocker
+import Core
 @testable import Podcasts
 
 class DownloadEpisodeWorkflowTests: XCTestCase {
@@ -30,16 +31,16 @@ class DownloadEpisodeWorkflowTests: XCTestCase {
             networking: Networking(
                 searchPodcasts: { _ in
                     Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 fetchPodcast: { _ in
                     Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 downloadEpisode: { url in
                     Just(URL(string: "https://github.com/yuta24/Podcasts")!)
                         .setFailureType(to: Networking.Failure.self)
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 }
             )
         )

@@ -7,6 +7,7 @@
 
 import Combine
 import XCTest
+import ComposableArchitecture
 import Core
 @testable import Podcasts
 
@@ -30,15 +31,15 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                 searchPodcasts: { _ in
                     Just(SearchPodcastResult(resultCount: 0, results: []))
                         .setFailureType(to: Networking.Failure.self)
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 fetchPodcast: { _ in
                     Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 downloadEpisode: { _ in
                     Fail<URL, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 }
             )
         )
@@ -87,15 +88,15 @@ class SearchPodcastsWorkflowTests: XCTestCase {
                         )
                     )
                     .setFailureType(to: Networking.Failure.self)
-                    .eraseToAnyPublisher()
+                    .eraseToEffect()
                 },
                 fetchPodcast: { _ in
                     Fail<FetchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 downloadEpisode: { _ in
                     Fail<URL, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 }
             )
         )

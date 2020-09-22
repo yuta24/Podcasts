@@ -7,6 +7,7 @@
 
 import Combine
 import XCTest
+import ComposableArchitecture
 @testable import Podcasts
 
 class FetchPodcastWorkflowTests: XCTestCase {
@@ -28,7 +29,7 @@ class FetchPodcastWorkflowTests: XCTestCase {
             networking: Networking(
                 searchPodcasts: { _ in
                     Fail<SearchPodcastResult, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 },
                 fetchPodcast: { _ in
                     Just(
@@ -43,11 +44,11 @@ class FetchPodcastWorkflowTests: XCTestCase {
                         )
                     )
                     .setFailureType(to: Networking.Failure.self)
-                    .eraseToAnyPublisher()
+                    .eraseToEffect()
                 },
                 downloadEpisode: { _ in
                     Fail<URL, Networking.Failure>(error: Networking.Failure())
-                        .eraseToAnyPublisher()
+                        .eraseToEffect()
                 }
             )
         )

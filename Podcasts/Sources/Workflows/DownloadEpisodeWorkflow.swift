@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ComposableArchitecture
 import Core
 
 struct DownloadEpisodeWorkflow {
@@ -16,7 +17,7 @@ struct DownloadEpisodeWorkflow {
         self.networking = networking
     }
 
-    func execute(_ episode: PlayingEpisode) -> AnyPublisher<URL, Networking.Failure> {
+    func execute(_ episode: PlayingEpisode) -> Effect<URL, Networking.Failure> {
         networking.downloadEpisode(episode.enclosure)
     }
 }

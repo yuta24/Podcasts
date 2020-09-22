@@ -84,3 +84,32 @@ extension AudioClient {
         )
     }()
 }
+
+extension AudioClient {
+    static let mock = AudioClient(
+        play: { _, _ in
+            Effect.fireAndForget {
+            }
+        },
+        resume: { _ in
+            Effect.fireAndForget {
+            }
+        },
+        pause: { _ in
+            Effect.fireAndForget {
+            }
+        },
+        stop: { _ in
+            Effect.fireAndForget {
+            }
+        },
+        rate: { _ in
+            return .none
+        },
+        currentTime: { _ in
+            return .none
+        },
+        set: { _, _ in
+        }
+    )
+}
