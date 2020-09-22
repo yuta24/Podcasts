@@ -13,6 +13,9 @@ import ComposableArchitecture
 struct AudioClient {
     struct Properties: Equatable {
         var rate: Float?
+
+        var isMuted: Bool?
+        var volume: Float?
     }
 
     enum Action: Equatable {
@@ -25,6 +28,9 @@ struct AudioClient {
     var stop: (AnyHashable) -> Effect<Never, Never>
     var rate: (AnyHashable) -> Float?
     var currentTime: (AnyHashable) -> CMTime?
+    var seek: (AnyHashable, CMTime) -> Effect<Never, Never>
+    var isMuted: (AnyHashable) -> Bool?
+    var volume: (AnyHashable) -> Float?
 
     var set: (AnyHashable, Properties) -> Void
 }
@@ -76,6 +82,13 @@ extension AudioClient {
             },
             rate: { dependencies[$0]?.player.rate },
             currentTime: { dependencies[$0]?.player.currentTime() },
+            seek: { id, time in
+                Effect.fireAndForget {
+                    dependencies[id]?.player.seek(to: time)
+                }
+            },
+            isMuted: { dependencies[$0]?.player.isMuted },
+            volume: { dependencies[$0]?.player.volume },
             set: { id, properties in
                 if let rate = properties.rate {
                     dependencies[id]?.player.rate = rate
@@ -107,6 +120,16 @@ extension AudioClient {
             return .none
         },
         currentTime: { _ in
+            return .none
+        },
+        seek: { _, _ in
+            Effect.fireAndForget {
+            }
+        },
+        isMuted: { _ in
+            return .none
+        },
+        volume: { _ in
             return .none
         },
         set: { _, _ in
