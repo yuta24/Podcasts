@@ -18,7 +18,14 @@ public struct PlayingEpisode: Equatable {
     public var fileUrl: URL?
     public let created: Date
 
-    public init(title: String, position: TimeInterval, duration: TimeInterval,  imageUrl: URL, enclosure: URL, fileUrl: URL?) {
+    public init(
+        title: String,
+        position: TimeInterval,
+        duration: TimeInterval,
+        imageUrl: URL,
+        enclosure: URL,
+        fileUrl: URL?
+    ) {
         self.title = title
         self.position = position
         self.duration = duration

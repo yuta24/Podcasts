@@ -54,7 +54,8 @@ class DownloadEpisodeWorkflowTests: XCTestCase {
                             position: 0,
                             duration: 120,
                             imageUrl: URL(string: "https://google.com")!,
-                            enclosure: URL(string: "https://github.com/yuta24/Podcasts")!))
+                            enclosure: URL(string: "https://github.com/yuta24/Podcasts")!,
+                            fileUrl: URL(string: "https://github.com/yuta24")!))
             .sink(
                 receiveCompletion: { completion in
                     exp.fulfill()
